@@ -16,8 +16,8 @@
 - In order to quantify this (repetition) phenomenon, we define the following function: M(N) = number of different elements in an N x N multiplication matrix.
 
 ### 2   To-do list and deliverables
-##### 1.Verify by hand thatM(5) = 14.
-##### 2.Verify by hand thatM(10) = 42.
-##### 3.Design an efficient parallel algorithm to compute the functionM(N) for values ofNup to 105.
-##### 4.Pay special attention to theload balancingissues that arise during the computation ofM(N).You will need to come up with an effective load balancing scheme, so that the work is as evenlydivided as possible between thepprocessors.
-##### 5.Run your code on SHARCnet to compile a table of values of the functionM(N) forN= 5, 10,20, 40, 80, 160, 320, 640, 1000, 2000, 8000, 16000, 32000, 40000, 50000, 60000, 70000, 80000,90000, 100000.
+- Verify by hand thatM(5) = 14.
+- Verify by hand thatM(10) = 42.
+- Design an efficient parallel algorithm to compute the functionM(N) for values ofNup to 105.
+- Pay special attention to theload balancingissues that arise during the computation ofM(N).You will need to come up with an effective load balancing scheme, so that the work is as evenlydivided as possible between thepprocessors.
+- Run your code on SHARCnet to compile a table of values of the functionM(N) forN= 5, 10,20, 40, 80, 160, 320, 640, 1000, 2000, 8000, 16000, 32000, 40000, 50000, 60000, 70000, 80000,90000, 100000.
