@@ -1,7 +1,7 @@
 ### CP431 Term ProjectMPI programming for multiplication tablesInstructor: 
 ##### I. Kotsireas, e-mailikotsire@wlu.ca.
-##### This assignment must be completed on a SHARCnet cluster using MPI C programming.
-##### Strict adherence to the SHARCNET etiquette (as per the course outline) is required.
+- This assignment must be completed on a SHARCnet cluster using MPI C programming.
+- Strict adherence to the SHARCNET etiquette (as per the course outline) is required.
 ##### This Term Project is aimed at developing an efficient implementation of a parallel algorithm to com-pute the number of different elements in an N x N multiplication table.
 
 
