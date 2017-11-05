@@ -1,5 +1,5 @@
-###                                                  CP431 Term ProjectMPI 
-###                                     programming for multiplication tablesInstructor: 
+### CP431 Term ProjectMPI 
+### programming for multiplication tablesInstructor: 
 ##### I. Kotsireas, e-mailikotsire@wlu.ca.
 - This assignment must be completed on a SHARCnet cluster using MPI C programming.
 - Strict adherence to the SHARCNET etiquette (as per the course outline) is required.
@@ -8,13 +8,12 @@
 
 ### 1  Statement of the problem
 
-
 - An N x N multiplication table is an N x N array A defined by Aij =i.j, for i, j= 1; . . . ; N. 
 - It is clear that an N x N multiplication table is symmetric, so we only need to worry about elements above the main diagonal.
 
-##### It is also clear that an N x N multiplication table has the squares 1^2, 2^2,. . .,N^2 as the elements of its main diagonal.
-##### It can be seen that some elements above the main diagonal of an N x N multiplication table are repeated.
-##### In order to quantify this (repetition) phenomenon, we define the following function: M(N) = number of different elements in an N x N multiplication matrix.
+- It is also clear that an N x N multiplication table has the squares 1^2, 2^2,. . .,N^2 as the elements of its main diagonal.
+- It can be seen that some elements above the main diagonal of an N x N multiplication table are repeated.
+- In order to quantify this (repetition) phenomenon, we define the following function: M(N) = number of different elements in an N x N multiplication matrix.
 
 ### 2   To-do list and deliverables
 ##### 1.Verify by hand thatM(5) = 14.
