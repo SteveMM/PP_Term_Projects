@@ -8,8 +8,8 @@
 ### 1  Statement of the problem
 
 
-##### An N x N multiplication table is an N x N array A defined by Aij =i.j, for i, j= 1; . . . ; N. 
-##### It is clear that an N x N multiplication table is symmetric, so we only need to worry about elements above the main diagonal.
+- An N x N multiplication table is an N x N array A defined by Aij =i.j, for i, j= 1; . . . ; N. 
+- It is clear that an N x N multiplication table is symmetric, so we only need to worry about elements above the main diagonal.
 
 ##### It is also clear that an N x N multiplication table has the squares 1^2, 2^2,. . .,N^2 as the elements of its main diagonal.
 ##### It can be seen that some elements above the main diagonal of an N x N multiplication table are repeated.
