@@ -1,4 +1,4 @@
-### CP331 Term ProjectMPI programming for multiplication tablesInstructor: 
+### CP431 Term ProjectMPI programming for multiplication tablesInstructor: 
 ##### I. Kotsireas, e-mailikotsire@wlu.ca.
 ##### This assignment must be completed on a SHARCnet cluster using MPI C programming.
 ##### Strict adherence to the SHARCNET etiquette (as per the course outline) is required.
