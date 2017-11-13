@@ -1,0 +1,11 @@
+mult_table:	nxn_mult_table.o main.o
+	mpicc mult_table.o main.o -o mult_table -fopenmp
+
+nxn_mult_table.o: nxn_mult_table.c nxn_mult_table.h
+	mpicc -c -std=c99 nxn_mult_table.c
+
+main.o: main.c
+    mpicc -c -std=c99 main.c
+
+clean: 
+rm nxn_mult_table.o main.o mult_table
