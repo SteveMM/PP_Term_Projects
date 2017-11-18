@@ -17,8 +17,7 @@ int main(int argc, char *argv[])
 {
     if (argc < 2)
     {
-      if (process_rank == ROOT)
-        fprintf(stderr, "ERROR: Missing multiplication table size.\nProgram Usage: table_size <size>\n");  
+      fprintf(stderr, "ERROR: Missing multiplication table size.\nProgram Usage: table_size <size>\n");  
     }
     else
     {
