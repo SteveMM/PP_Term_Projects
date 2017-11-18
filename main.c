@@ -81,8 +81,8 @@ int main(int argc, char *argv[])
   while (my_chunk > 0) 
   {
     product = i * j;
-    mult_table[i][j] = product;
-    mult_table[j][i] = product;
+    mult_table[i-1][j-1] = product;
+    mult_table[j-1][i-1] = product;
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
