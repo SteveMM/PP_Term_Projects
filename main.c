@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
           
           const int cells = table_size * table_size + (table_size / 2);
           const int chunk = process_rank * evaluate_length + remainder;
-          printf("Process %i: %i\n", process_rank, chunk);
+          printf("Process %i chunk: %i\n", process_rank, chunk);
           
           // Calculate all (i,j) indicies for each process to start at
           const int offset = 1;
