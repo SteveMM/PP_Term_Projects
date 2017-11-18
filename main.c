@@ -89,7 +89,6 @@ int main(int argc, char *argv[])
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
-  printf("table size: %i", table_size);
 
   if (process_rank == ROOT) {
     for (int i = 0; i < table_size; i++) {
