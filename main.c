@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
   }
 
   // TESTING
-  printf("process %i chunk: %i; (i,j) = (%i,%i)\n", process_rank, i, j);
+  printf("process %i (i,j) = (%i,%i)\n", process_rank, i, j);
 
   MPI_Finalize();
   return 0;
