@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
   int mult_table[table_size][table_size];
 
-  const int chunk = 0, i_start = 0;
+  int chunk = 0, i_start = 0;
   const int cells = ((table_size * table_size) / 2) + (table_size / 2);
 
   // TESTING
