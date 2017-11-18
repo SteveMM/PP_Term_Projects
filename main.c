@@ -36,7 +36,9 @@ int main(int argc, char *argv[])
   return 0;
   }
 
-  int chunk = 0, i_start = 0;
+  int mult_table[table_size][table_size];
+
+  const int chunk = 0, i_start = 0;
   const int cells = ((table_size * table_size) / 2) + (table_size / 2);
 
   // TESTING
@@ -58,12 +60,13 @@ int main(int argc, char *argv[])
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
-  int end = process_rank * chunk;
+  int my_chunk = chunk;
+  int end = process_rank * my_chunk;
   int i = start;
   int j = start;
   while (end > 0)
   {
-      end--; chunk--; i++;
+      end--; my_chunk--; i++;
       if (i == (table_size + offset)) 
       {
           j++; i = j;
@@ -72,6 +75,30 @@ int main(int argc, char *argv[])
 
   // TESTING
   printf("process %i (i,j) = (%i,%i)\n", process_rank, i, j);
+
+  my_chunk = chunk;
+  int product;
+  while (my_chunk > 0) 
+  {
+    product = i * j;
+    mult_table[i][j] = product;
+    mult_table[j][i] = product;
+    i++; my_chunk--;
+    if (i == (table_size + offset)) 
+    {
+      j++; i = j;
+    }
+  }
+
+  if (process_rank == ROOT) {
+    for (int i = 0; i < table_size; i++) {
+      for (int j = 0; j < table_size; j++) {
+        printf("%i ", mult_table[i][j]);
+      }
+      printf("\n");
+    }
+  }
+
 
   MPI_Finalize();
   return 0;
