@@ -38,7 +38,12 @@ int main(int argc, char *argv[])
 
   int chunk = 0, i_start = 0;
   const int cells = ((table_size * table_size) / 2) + (table_size / 2);
-  printf("Cells: %i\n", cells);
+
+  // TESTING
+  if (process_rank = ROOT) 
+  {
+    printf("Cells: %i\n", cells);
+  }
 
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
@@ -61,7 +66,7 @@ int main(int argc, char *argv[])
           j++; i = j;
       }
   }
-  printf("process %i chunk: %i; (i,j) = (%i,%i)\n", process_rank, i, j);
+  printf("process %i chunk: %i; (i,j) = (%i,%i)\n", process_rank, chunk, i, j);
 
   MPI_Finalize();
   return 0;
