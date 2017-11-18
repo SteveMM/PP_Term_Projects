@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     mult_table[i-1][j-1] = product;
     mult_table[j-1][i-1] = product;
     i++; my_chunk--;
-    if (i == (table_size)) 
+    if (i == (table_size + offset)) 
     {
       j++; i = j;
     }
