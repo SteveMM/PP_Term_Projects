@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  MPI_Barrier();
+  MPI_Barrier(MPI_COMM_WORLD);
 
   if (process_rank == ROOT) {
     for (int i = 0; i < table_size; i++) {
