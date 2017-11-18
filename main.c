@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
         int evaluate_length = 0, i_start = 0;
         const int cells = ((table_size * table_size) / 2) + (table_size / 2);
         printf("Cells: %i\n", cells);
+
         // Calculate evaluate_length, the number of cells this processor will calculate
         evaluate_length = floor(cells / num_processors);
 
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
 
         int remainder = MIN(process_rank, cells % num_processors);
         
-        int chunk = process_rank * evaluate_length + remainder;
+        int chunk = evaluate_length + remainder;
         printf("Process %i chunk: %i\n", process_rank, chunk);
         
         // Calculate all (i,j) indicies for each process to start at
