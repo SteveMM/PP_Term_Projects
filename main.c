@@ -14,66 +14,59 @@ static const int ROOT = 0;
 
 int main(int argc, char *argv[])
 {
-    // Define problem paramaters
-    long long int table_size = atoll(argv[1]);
-      
-    MPI_Status status;
-    MPI_Request request;
+  // Define problem paramaters
+  long long int table_size = atoll(argv[1]);
+    
+  MPI_Status status;
+  MPI_Request request;
 
-    int process_rank;
-    int num_processors;
+  int process_rank;
+  int num_processors;
 
-    MPI_Init(&argc, &argv);
-    MPI_Comm_rank(MPI_COMM_WORLD, &process_rank);
-    MPI_Comm_size(MPI_COMM_WORLD, &num_processors);
+  MPI_Init(&argc, &argv);
+  MPI_Comm_rank(MPI_COMM_WORLD, &process_rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &num_processors);
 
+  if (argc < 2)
+  {
+  if (process_rank == ROOT)
+    printf("ERROR: Missing array length exponent. Usage: ./a2 [array length exponent]\n");
+  // MPI clean-up
+  MPI_Finalize();
+  return 0;
+  }
 
-    if (argc < 2)
-    {
-    if (process_rank == ROOT)
-      printf("ERROR: Missing array length exponent. Usage: ./a2 [array length exponent]\n");
-    // MPI clean-up
-    MPI_Finalize();
-    return 0;
-    }
+  int chunk = 0, i_start = 0;
+  const int cells = ((table_size * table_size) / 2) + (table_size / 2);
+  printf("Cells: %i\n", cells);
 
-    if (process_rank == ROOT)
-    {
-        int evaluate_length = 0, i_start = 0;
-        const int cells = ((table_size * table_size) / 2) + (table_size / 2);
-        printf("Cells: %i\n", cells);
+  // Calculate each processors chunk, the 
+  // number of cells this processor will calculate
+  chunk = floor(cells / num_processors);
 
-        // Calculate evaluate_length, the number of cells this processor will calculate
-        evaluate_length = floor(cells / num_processors);
+  if (process_rank < cells % num_processors)
+        chunk += 1;
 
-        if (process_rank < cells % num_processors)
-		          evaluate_length += 1;
-
-        int remainder = MIN(process_rank, cells % num_processors);
-        
-        int chunk = evaluate_length + remainder;
-        printf("Process %i chunk: %i\n", process_rank, chunk);
-        
-        // Calculate all (i,j) indicies for each process to start at
-        const int offset = 1;
-        const int start = 1;
-        int end = process_rank * chunk;
-        
-        int i = start;
-        int j = start;
-        while (end > 0)
-        {
-            end--; chunk--; i++;
-            if (i == (table_size + offset)) 
-            {
-                j++; i = j;
-            }
-        }
-        
-        printf("process %i (i,j) = (%i,%i)", process_rank, i, j);
-        
-        // Distribute (i,j) pairs to each process
-    }
+  const int remainder = MIN(process_rank, cells % num_processors);
+  
+  chunk += remainder;
+  printf("Process %i chunk: %i\n", process_rank, chunk);
+  
+  // Calculate all (i,j) indicies for each process to start at
+  const int offset = 1;
+  const int start = 1;
+  int end = process_rank * chunk;
+  int i = start;
+  int j = start;
+  while (end > 0)
+  {
+      end--; chunk--; i++;
+      if (i == (table_size + offset)) 
+      {
+          j++; i = j;
+      }
+  }
+  printf("process %i (i,j) = (%i,%i)", process_rank, i, j);
 
   MPI_Finalize();
   return 0;
