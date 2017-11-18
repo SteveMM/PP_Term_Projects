@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
   if (process_rank < cells % num_processors)
         chunk += 1;
 
-  const int remainder = MIN(process_rank, cells % num_processors);
+  // const int remainder = MIN(process_rank, cells % num_processors);
   
   chunk += remainder;
   printf("Process %i chunk: %i\n", process_rank, chunk);
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
           j++; i = j;
       }
   }
-  printf("process %i (i,j) = (%i,%i)", process_rank, i, j);
+  printf("process %i (i,j) = (%i,%i)\n", process_rank, i, j);
 
   MPI_Finalize();
   return 0;
