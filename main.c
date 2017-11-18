@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 
         int remainder = MIN(process_rank, cells % num_processors);
         
+        printf("Cells: %i", cells);
         int chunk = process_rank * evaluate_length + remainder;
         printf("Process %i chunk: %i\n", process_rank, chunk);
         
