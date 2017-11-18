@@ -51,7 +51,10 @@ int main(int argc, char *argv[])
 
   if (process_rank < cells % num_processors)
         chunk += 1;
-  
+
+  // TESTING
+  printf("process %i chunk: %i", process_rank, chunk);
+
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
@@ -66,7 +69,9 @@ int main(int argc, char *argv[])
           j++; i = j;
       }
   }
-  printf("process %i chunk: %i; (i,j) = (%i,%i)\n", process_rank, chunk, i, j);
+
+  // TESTING
+  printf("process %i chunk: %i; (i,j) = (%i,%i)\n", process_rank, i, j);
 
   MPI_Finalize();
   return 0;
