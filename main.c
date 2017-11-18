@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
   const int cells = ((table_size * table_size) / 2) + (table_size / 2);
 
   // TESTING
-  if (process_rank = ROOT) 
+  if (process_rank == ROOT) 
   {
     printf("Cells: %i\n", cells);
   }
