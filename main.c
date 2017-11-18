@@ -73,13 +73,9 @@ int main(int argc, char *argv[])
       }
   }
 
-  // TESTING
-  printf("process %i (i,j) = (%i,%i)\n", process_rank, i, j);
-
   my_chunk = chunk;
   int product;
-  printf("table size: %i", table_size);
-  printf("process %i chunk: %i\n", process_rank, my_chunk);
+  printf("process %i chunk: %i; (i,j): (%i,%i)\n", process_rank, my_chunk, i, j);
   while (my_chunk > 0) 
   {
     product = i * j;
@@ -93,6 +89,7 @@ int main(int argc, char *argv[])
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
+  printf("table size: %i", table_size);
 
   if (process_rank == ROOT) {
     for (int i = 0; i < table_size; i++) {
