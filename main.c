@@ -27,9 +27,10 @@ int main(int argc, char *argv[])
     MPI_Comm_rank(MPI_COMM_WORLD, &process_rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_processors);
 
+
     if (argc < 2)
     {
-    if (process_rank == FIRST)
+    if (process_rank == ROOT)
       printf("ERROR: Missing array length exponent. Usage: ./a2 [array length exponent]\n");
     // MPI clean-up
     MPI_Finalize();
@@ -40,15 +41,15 @@ int main(int argc, char *argv[])
     {
         int evaluate_length = 0, i_start = 0;
         // Calculate evaluate_length, the number of cells this processor will calculate
-        evaluate_length = floor(n / num_processors);
+        evaluate_length = floor(table_size / num_processors);
 
         if (process_rank < table_size % num_processors)
 		          evaluate_length += 1;
 
-        int remainder = MIN(p_rank, table_size % num_processors);
+        int remainder = MIN(process_rank, table_size % num_processors);
         
         const int cells = table_size * table_size + (table_size / 2);
-        const int chunk = process_rank * evaluate_length + remainder;
+        int chunk = process_rank * evaluate_length + remainder;
         printf("Process %i chunk: %i\n", process_rank, chunk);
         
         // Calculate all (i,j) indicies for each process to start at
@@ -71,11 +72,6 @@ int main(int argc, char *argv[])
         
         // Distribute (i,j) pairs to each process
     }
-    else
-    {
-        // Search for unique mult_table elements within each process
-    }
-  }
 
   MPI_Finalize();
   return 0;
