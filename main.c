@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include "nxn_mult_table.h"
 
 // Macro definition(s)
 #ifndef MIN
