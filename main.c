@@ -11,7 +11,7 @@
 #endif
 
 // Constants
-static const int FIRST = 0;
+static const int ROOT = 0;
 
 int main(int argc, char *argv[])
 {
