@@ -76,8 +76,8 @@ int main(int argc, char *argv[])
   while (my_chunk > 0) 
   {
     product = i * j;
-    mult_table[i-1][j-1] = 0;
-    mult_table[j-1][i-1] = 0;
+    mult_table[i-1][j-1] = product;
+    mult_table[j-1][i-1] = product;
     i++; my_chunk--;
     if (i == (table_size)) 
     {
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
   if (process_rank == ROOT) {
     for (int i = 0; i < table_size; i++) {
       for (int j = 0; j < table_size; j++) {
-        printf("%i ", mult_table[j][i]);
+        printf("%i ", mult_table[i][j]);
       }
       printf("\n");
     }
