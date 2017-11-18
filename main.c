@@ -54,9 +54,6 @@ int main(int argc, char *argv[])
   if (process_rank < cells % num_processors)
         chunk += 1;
 
-  // TESTING
-  printf("process %i chunk: %i\n", process_rank, chunk);
-
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
@@ -93,7 +90,7 @@ int main(int argc, char *argv[])
   if (process_rank == ROOT) {
     for (int i = 0; i < table_size; i++) {
       for (int j = 0; j < table_size; j++) {
-        printf("%i ", mult_table[i][j]);
+        printf("%i ", mult_table[j][i]);
       }
       printf("\n");
     }
