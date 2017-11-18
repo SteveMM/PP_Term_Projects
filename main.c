@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
 
   my_chunk = chunk;
   int product;
+  printf("process %i chunk: %i", process_rank, my_chunk);
   while (my_chunk > 0) 
   {
     product = i * j;
