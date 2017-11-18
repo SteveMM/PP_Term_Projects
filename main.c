@@ -78,14 +78,14 @@ int main(int argc, char *argv[])
 
   my_chunk = chunk;
   int product;
-  printf("process %i chunk: %i", process_rank, my_chunk);
+  printf("process %i chunk: %i\n", process_rank, my_chunk);
   while (my_chunk > 0) 
   {
     product = i * j;
     mult_table[i-1][j-1] = product;
     mult_table[j-1][i-1] = product;
     i++; my_chunk--;
-    if (i == (table_size + offset)) 
+    if (i == (table_size)) 
     {
       j++; i = j;
     }
