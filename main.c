@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
 
   my_chunk = chunk;
   int product;
+  printf("table size: %i", table_size);
   printf("process %i chunk: %i\n", process_rank, my_chunk);
   while (my_chunk > 0) 
   {
