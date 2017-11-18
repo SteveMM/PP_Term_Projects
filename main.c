@@ -15,7 +15,7 @@ static const int ROOT = 0;
 int main(int argc, char *argv[])
 {
   // Define problem paramaters
-  long long int table_size = atoll(argv[1]);
+  int table_size = atoll(argv[1]);
     
   MPI_Status status;
   MPI_Request request;
