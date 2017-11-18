@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
         chunk += 1;
 
   // const int remainder = MIN(process_rank, cells % num_processors);
-  
-  chunk += remainder;
+  // chunk += remainder;
+      
   printf("Process %i chunk: %i\n", process_rank, chunk);
   
   // Calculate all (i,j) indicies for each process to start at
