@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
         chunk += 1;
 
   // TESTING
-  printf("process %i chunk: %i", process_rank, chunk);
+  printf("process %i chunk: %i\n", process_rank, chunk);
 
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
