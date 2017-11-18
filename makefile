@@ -5,4 +5,4 @@ main.o:	main.c
 	gcc -c -std=c99 main.c
 
 clean:	
-rm main.o main
+	rm main.o main
