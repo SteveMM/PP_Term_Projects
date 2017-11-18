@@ -90,6 +90,8 @@ int main(int argc, char *argv[])
     }
   }
 
+  MPI_Barrier();
+
   if (process_rank == ROOT) {
     for (int i = 0; i < table_size; i++) {
       for (int j = 0; j < table_size; j++) {
