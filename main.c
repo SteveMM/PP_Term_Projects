@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
   printf("process %i chunk: %i; (i,j): (%i,%i)\n", process_rank, my_chunk, i, j);
   while (my_chunk > 0) 
   {
+    product = i * j;
     mult_table[i-1][j-1] = product;
     mult_table[j-1][i-1] = product;
     printf("(%i,%i); product: %i; cell value: %i\n", i, j, product, mult_table[j-1][i-1]);
