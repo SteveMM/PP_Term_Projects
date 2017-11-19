@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
   int data_length;
   if (process_rank == ROOT) {
-    int *buff = malloc(sizeof(int) * (chunk + 1);
+    int *buff = malloc(sizeof(int) * (chunk + 1));
     for (int rank = 0; rank < num_processors; rank++) {
       MPI_Irecv(&buff, chunk + 1, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
       data_length = sizeof(buff) / sizeof(int);
