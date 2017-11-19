@@ -54,6 +54,8 @@ int main(int argc, char *argv[])
   if (process_rank < cells % num_processors)
         chunk += 1;
 
+  int data_array[chunk];
+
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
@@ -75,10 +77,8 @@ int main(int argc, char *argv[])
   printf("process %i chunk: %i; (i,j): (%i,%i)\n", process_rank, my_chunk, i, j);
   while (my_chunk > 0) 
   {
-    product = i * j;
-    mult_table[i-1][j-1] = product;
-    mult_table[j-1][i-1] = product;
-    printf("(%i,%i); product: %i; cell value: %i\n", i, j, product, mult_table[j-1][i-1]);
+    data_array[table_size - chunk] = i * j
+    printf("(%i,%i); product: %i; cell value: %i\n", i, j);
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
@@ -87,14 +87,17 @@ int main(int argc, char *argv[])
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Send(&data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD);
 
   if (process_rank == ROOT) {
-    for (int i = 0; i < table_size; i++) {
-      for (int j = 0; j < table_size; j++) {
-        printf("%i ", mult_table[i][j]);
+    for (int rank = 0; rank < num_processors; rank++) {
+      MPI_Recv(&data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD);
+      data_length = sizeof(data_array) * sizeof(int);
+      for (int i = 0; i < data_length; i++) {
+        printf("%i ", data_array[i]);
       }
-      printf("\n");
     }
+    
   }
 
 
