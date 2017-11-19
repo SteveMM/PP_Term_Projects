@@ -14,10 +14,7 @@ static const int ROOT = 0;
 static const int COUNT = 1;
 
 int main(int argc, char *argv[])
-{
-  // Define problem paramaters
-  int table_size = atoll(argv[1]);
-    
+{   
   MPI_Status status;
   MPI_Request request;
 
@@ -30,15 +27,16 @@ int main(int argc, char *argv[])
 
   if (argc < 2)
   {
-  if (process_rank == ROOT)
-    printf("ERROR: Missing array length exponent. Usage: ./a2 [array length exponent]\n");
-  // MPI clean-up
-  MPI_Finalize();
-  return 0;
+    if (process_rank == ROOT)
+      printf("ERROR: Missing table size. Usage: ./main [table size]\n");
+      
+      // MPI clean-up
+      MPI_Finalize();
+      return 0;
   }
-
-  int mult_table[table_size][table_size];
-
+  
+  // Define problem paramaters
+  int table_size = atol(argv[1]);
   int chunk = 0, i_start = 0;
   const int cells = ((table_size * table_size) / 2) + (table_size / 2);
 
