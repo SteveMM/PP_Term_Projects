@@ -83,13 +83,14 @@ int main(int argc, char *argv[])
     {
       j++; i = j;
     }
-    printf("here");
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT) {
     MPI_Send(data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD);
   }
+
+  printf("here");
 
   int data_length;
   if (process_rank == ROOT) {
