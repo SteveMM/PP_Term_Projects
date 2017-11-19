@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
   while (my_chunk > 0) 
   {
     data_array[table_size - chunk] = i * j;
-    printf("(%i,%i); product: %i; cell value: %i\n", i, j);
+    printf("(%i,%i) product: %i\n", i, j, i * j);
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
