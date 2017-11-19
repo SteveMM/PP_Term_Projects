@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
   if (process_rank < cells % num_processors)
         chunk += 1;
 
-  int *data_array = (int *)malloc(sizeof(chunk));
+  int *data_array = (int *)malloc(sizeof(int) * chunk);
   int data_length = LENGTH(data_array);
   printf("data_length: %i\n", data_length);
 
