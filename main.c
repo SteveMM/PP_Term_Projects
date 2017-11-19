@@ -60,7 +60,8 @@ int main(int argc, char *argv[])
   int *data_array = (int *)malloc(sizeof(int) * chunk);
   int data_length = LENGTH(data_array);
   printf("data_length: %i\n", data_length);
-  printf("sizeof(int) * chunk: %i\n", (sizeof(int) * chunk));
+  int size = (sizeof(int) * chunk);
+  printf("sizeof(int) * chunk: %i\n", size);
 
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
