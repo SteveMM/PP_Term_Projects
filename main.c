@@ -89,11 +89,12 @@ int main(int argc, char *argv[])
 
   int data_length;
   if (process_rank == ROOT) {
+    int data[chunk+1];
     for (int rank = 0; rank < num_processors; rank++) {
-      MPI_Irecv(data_array, chunk + 1, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
-      data_length = sizeof(data_array) / sizeof(int);
+      MPI_Irecv(data, chunk + 1, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
+      data_length = sizeof(data) / sizeof(int);
       for (int i = 0; i < data_length; i++) {
-        printf("%i ", data_array[i]);
+        printf("%i ", data[i]);
       }
       printf("\n");
     }
