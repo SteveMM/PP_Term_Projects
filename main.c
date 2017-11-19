@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     for (int rank = 0; rank < num_processors; rank++) {
       printf("rank: %i", rank);
       MPI_Recv(data_array, chunk + 1, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &status);
-      data_length = sizeof(data_array) * sizeof(int);
+      data_length = sizeof(data_array) / sizeof(int);
       for (int i = 0; i < data_length; i++) {
         printf("%i ", data_array[i]);
       }
