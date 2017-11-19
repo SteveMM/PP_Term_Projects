@@ -97,6 +97,8 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) {
     for (int rank = 0; rank < num_processors; rank++) {
+      // MPI_Irecv(&chunk, COUNT, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
+      // MPI_Irecv(data_array, chunk, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
       MPI_Recv(&chunk, COUNT, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &status);
       MPI_Recv(data_array, chunk, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &status);
       printf("rank %i chunk: %i : ", rank, chunk);
