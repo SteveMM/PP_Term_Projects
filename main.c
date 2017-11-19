@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
-  MPI_ISend(data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD);
+  MPI_Isend(data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD);
 
   int data_length;
   if (process_rank == ROOT) {
