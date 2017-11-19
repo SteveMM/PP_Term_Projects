@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
   if (process_rank < cells % num_processors)
         chunk += 1;
 
-  int data_array[chunk];
+  int *data_array = (int *)malloc(sizeof(chunk));
 
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
       printf("\n");
     }
   }
-  
+
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize();
   return 0;
