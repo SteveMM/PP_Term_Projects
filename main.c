@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
     {
       j++; i = j;
     }
+    printf("here");
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
