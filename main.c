@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
         chunk += 1;
 
   int *data_array = (int*)malloc(chunk * sizeof(int));
+  print("chunk: %i\n", chunk);
   int data_length = sizeof(data_array) / sizeof(data_array[0]);
   printf("data length: %i\n", data_length);
 
