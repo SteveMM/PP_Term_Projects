@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
   if (process_rank < cells % num_processors)
         chunk += 1;
 
-  int data_array = (int*)malloc(chunk * sizeof(int));
+  int *data_array = malloc(chunk * sizeof(int));
 
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
