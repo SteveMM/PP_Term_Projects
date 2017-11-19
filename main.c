@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
-  printf("FIRST rank %i my_chunk: %i : ", rank, my_chunk);
+  printf("FIRST rank %i my_chunk: %i : ", process_rank, my_chunk);
   MPI_Isend(&chunk, 1, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
   MPI_Isend(data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
 
