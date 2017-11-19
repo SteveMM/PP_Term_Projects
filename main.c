@@ -85,6 +85,7 @@ int main(int argc, char *argv[])
     }
   }
 
+  MPI_Barrier(MPI_COMM_WORLD);
   MPI_Isend(data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
 
   int data_length;
@@ -98,7 +99,7 @@ int main(int argc, char *argv[])
       printf("\n");
     }
   }
-
+  
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize();
   return 0;
