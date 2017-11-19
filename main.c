@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
         chunk += 1;
 
   int *data_array = (int*)malloc(chunk * sizeof(int));
-  data_length = sizeof(data_array) / sizeof(data_array[0]);
+  int data_length = sizeof(data_array) / sizeof(data_array[0]);
   printf("data length: %i\n", data_length);
 
   // Calculate all (i,j) indicies for each process to start at
@@ -90,7 +90,6 @@ int main(int argc, char *argv[])
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Isend(&data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
 
-  int data_length;
   if (process_rank == ROOT) {
     for (int rank = 0; rank < num_processors; rank++) {
       MPI_Irecv(&data_array, chunk + 1, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
