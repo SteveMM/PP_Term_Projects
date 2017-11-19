@@ -75,7 +75,6 @@ int main(int argc, char *argv[])
   my_chunk = chunk;
   int product;
   int index = 0;
-  printf("process %i chunk: %i; (i,j): (%i,%i)\n", process_rank, my_chunk, i, j);
   while (my_chunk > 0) 
   {
     data_array[index++] = i * j;
@@ -85,13 +84,12 @@ int main(int argc, char *argv[])
     {
       j++; i = j;
     }
-    printf("index: %i", index);
   }
 
   printf("MPI_Barrier");
   MPI_Barrier(MPI_COMM_WORLD);
   printf("MPI_Send");
-  MPI_Send(&data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD);
+  // MPI_Send(&data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD);
   printf("Done MPI_Send");
 
   int data_length;
