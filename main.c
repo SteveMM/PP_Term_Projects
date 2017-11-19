@@ -91,15 +91,15 @@ int main(int argc, char *argv[])
 
   MPI_Barrier(MPI_COMM_WORLD);
   printf("FIRST rank %i chunk: %i\n", process_rank, chunk);
-  MPI_Isend(&chunk, 1, MPI_INT, ROOT, 1, MPI_COMM_WORLD, &request);
-  MPI_Isend(data_array, chunk, MPI_INT, ROOT, 1, MPI_COMM_WORLD, &request);
+  MPI_Isend(&chunk, COUNT, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
+  MPI_Isend(data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
 
   if (process_rank == ROOT) {
     for (int rank = 0; rank < num_processors; rank++) {
-      MPI_Irecv(&chunk, 1, MPI_INT, ROOT, 1, MPI_COMM_WORLD, &request);
+      MPI_Irecv(&chunk, COUNT, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
+      MPI_Irecv(data_array, chunk, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
       printf("rank %i chunk: %i : ", rank, chunk);
-      MPI_Irecv(data_array, chunk, MPI_INT, ROOT, 1, MPI_COMM_WORLD, &request);
-      for (int i = 0; i < chunk + 1; i++) {
+      for (int i = 0; i < chunk; i++) {
         printf("%i ", data_array[i]);
       }
       printf("\n");
