@@ -74,10 +74,11 @@ int main(int argc, char *argv[])
 
   my_chunk = chunk;
   int product;
+  int index = 0;
   printf("process %i chunk: %i; (i,j): (%i,%i)\n", process_rank, my_chunk, i, j);
   while (my_chunk > 0) 
   {
-    data_array[table_size - my_chunk] = i * j;
+    data_array[index++] = i * j;
     printf("(%i,%i) product: %i\n", i, j, i * j);
     i++; my_chunk--;
     if (i == (table_size + offset)) 
