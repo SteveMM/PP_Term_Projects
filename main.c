@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     {
       j++; i = j;
     }
-    printf("index:", index);
+    printf("index: %i", index);
   }
 
   printf("MPI_Barrier");
