@@ -93,6 +93,7 @@ int main(int argc, char *argv[])
   printf("FIRST rank %i chunk: %i\n", process_rank, chunk);
   MPI_Isend(&chunk, COUNT, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
   MPI_Isend(data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
+  MPI_Barrier(MPI_COMM_WORLD);
 
   if (process_rank == ROOT) {
     for (int rank = 0; rank < num_processors; rank++) {
