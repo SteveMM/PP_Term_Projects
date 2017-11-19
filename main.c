@@ -86,6 +86,7 @@ int main(int argc, char *argv[])
     }
   }
 
+  printf("MPI_Barrier");
   MPI_Barrier(MPI_COMM_WORLD);
   printf("MPI_Send");
   MPI_Send(&data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD);
