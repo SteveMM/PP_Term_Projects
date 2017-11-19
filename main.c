@@ -58,12 +58,6 @@ int main(int argc, char *argv[])
         chunk += 1;
 
   int *data_array = (int *)malloc(sizeof(int) * chunk);
-  int data_length = LENGTH(data_array);
-  printf("data_length: %i\n", data_length);
-  int size = (sizeof(int) * chunk);
-  int array_size = sizeof(data_array);
-  printf("sizeof(int) * chunk: %i\n", size);
-  printf("array size: %i", array_size);
 
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
@@ -101,8 +95,7 @@ int main(int argc, char *argv[])
   if (process_rank == ROOT) {
     for (int rank = 0; rank < num_processors; rank++) {
       MPI_Irecv(data_array, chunk + 1, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
-      data_length = LENGTH(data_array);
-      for (int i = 0; i < data_length; i++) {
+      for (int i = 0; i < chunk + 1; i++) {
         printf("%i ", data_array[i]);
       }
       printf("\n");
