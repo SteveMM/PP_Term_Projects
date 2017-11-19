@@ -87,20 +87,20 @@ int main(int argc, char *argv[])
     }
   }
 
-  MPI_Barrier(MPI_COMM_WORLD);
-  MPI_Isend(data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
+  // MPI_Barrier(MPI_COMM_WORLD);
+  // MPI_Isend(&data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
 
-  if (process_rank == ROOT) {
-    for (int rank = 0; rank < num_processors; rank++) {
-      MPI_Irecv(data_array, chunk + 1, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
-      data_length = sizeof(data_array) / sizeof(data_array[0]);
-      printf("data length: %i\n", data_length);
-      for (int i = 0; i < data_length; i++) {
-        printf("%i ", data_array[i]);
-      }
-      printf("\n");
-    }
-  }
+  // if (process_rank == ROOT) {
+  //   for (int rank = 0; rank < num_processors; rank++) {
+  //     MPI_Irecv(&data_array, chunk + 1, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
+  //     data_length = sizeof(data_array) / sizeof(data_array[0]);
+  //     printf("data length: %i\n", data_length);
+  //     for (int i = 0; i < data_length; i++) {
+  //       printf("%i ", data_array[i]);
+  //     }
+  //     printf("\n");
+  //   }
+  // }
 
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize();
