@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-// #include "union.h"
+#include "union.h"
 
 // Macro definition(s)
 #ifndef MIN
@@ -109,10 +109,10 @@ int main(int argc, char *argv[])
         long *next_proc_array = malloc(sizeof(next_array_chunk_size) * sizeof(long));
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
-        printf("rank %i chunk: %i : ", rank, next_array_chunk_size);
+        printf("rank %i chunk: %lli : ", rank, next_array_chunk_size);
         
         for (int i = 0; i < next_array_chunk_size; i++) 
-          printf("%i ", next_proc_array[i]);
+          printf("%lli ", next_proc_array[i]);
         
         printf("\n");
     }
