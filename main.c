@@ -63,10 +63,10 @@ int main(int argc, char *argv[])
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
-  int my_chunk = chunk;
-  int end = process_rank * my_chunk;
-  int i = start;
-  int j = start;
+  long long my_chunk = chunk;
+  long long end = process_rank * my_chunk;
+  long long i = start;
+  long long j = start;
   while (end > 0)
   {
       end--; my_chunk--; i++;
@@ -77,8 +77,8 @@ int main(int argc, char *argv[])
   }
 
   my_chunk = chunk;
-  int product;
-  int index = 0;
+  long product;
+  long long index = 0;
   while (my_chunk > 0) 
   {
     data_array[index++] = i * j;
@@ -111,8 +111,8 @@ int main(int argc, char *argv[])
         
         printf("rank %i chunk: %lli : ", rank, next_array_chunk_size);
         
-        // for (long long i = 0; i < next_array_chunk_size; i++) 
-        //   printf("%lli ", next_proc_array[i]);
+        for (long long i = 0; i < next_array_chunk_size; i++) 
+          printf("%lli ", next_proc_array[i]);
         
         printf("\n");
     }
