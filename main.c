@@ -131,6 +131,7 @@ int main(int argc, char *argv[])
         counter--;
         hash_map[i]++;
       }
+    }
     printf("\n");
     for (int rank = 1; rank < num_processors; ++rank) 
     {
