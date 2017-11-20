@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
   while (my_chunk > 0) 
   {
     data_array[index++] = i * j;
-    printf("Product: %lli\n", i * j);
+    //printf("Product: %lli\n", i * j);
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
   if (process_rank != ROOT)
   {
     MPI_Send(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
-    MPI_Send(data_array, chunk, MPI_LONG, ROOT, process_rank, MPI_COMM_WORLD);
+    MPI_Send(data_array, chunk, MPI_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
   } // else
   // {
   //   MPI_Isend(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
@@ -107,10 +107,12 @@ int main(int argc, char *argv[])
         long long next_array_chunk_size;
         MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);  
       
+        printf("rank %i chunk: %lli -> ", rank, next_array_chunk_size);
+      
         long *next_proc_array = (long *) malloc(next_array_chunk_size * sizeof(long));
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
-        printf("rank %i chunk: %lli -> ", rank, next_array_chunk_size);
+        printf("Beep Boop: Yo, received my shit!\n");
         
         for (long long i = 0; i < next_array_chunk_size; i++) 
           printf("%lli ", next_proc_array[i]);
