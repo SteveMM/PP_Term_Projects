@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
           if (hash_map[next_proc_array[i]] == 2) {
             counter--;
           }
-          printf("%lli ", next_proc_array[i]);
+          // printf("%lli ", next_proc_array[i]);
         }
         // printf("counter: %lli", counter);
         // printf("\n");
