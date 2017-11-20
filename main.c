@@ -51,12 +51,6 @@ int main(int argc, char *argv[])
   long table_size = atol(argv[1]);
   const int cells = ((( table_size * table_size) / 2) + ceil((float) table_size / 2));
 
-  // TESTING
-  if (process_rank == ROOT) 
-  {
-    printf("Cells: %i\n", cells);
-  }
-
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
   //chunk = floor(cells / num_processors);
@@ -124,7 +118,7 @@ int main(int argc, char *argv[])
   if (process_rank == ROOT) 
   { 
     int *hash_map = (int*) calloc(table_size * table_size, sizeof(int));
-    printf("rank %i chunk: %lli -> ", process_rank, chunk_sizes[0]);
+    // printf("rank %i chunk: %lli -> ", process_rank, chunk_sizes[0]);
     for (long long i = 0; i < chunk_sizes[0]; i++) {
       printf("%lli ", data_array[i]);
       counter++;
@@ -133,14 +127,14 @@ int main(int argc, char *argv[])
         counter--;
       }
     }
-    printf("counter: %lli", counter);
-    printf("\n");
+    // printf("counter: %lli", counter);
+    // printf("\n");
     for (int rank = 1; rank < num_processors; ++rank) 
     {
         long long next_array_chunk_size;
         MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);  
       
-        printf("rank %i chunk: %lli -> ", rank, next_array_chunk_size);
+        // printf("rank %i chunk: %lli -> ", rank, next_array_chunk_size);
       
         long *next_proc_array = (long *) malloc(next_array_chunk_size * sizeof(long));
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
@@ -153,8 +147,8 @@ int main(int argc, char *argv[])
           }
           printf("%lli ", next_proc_array[i]);
         }
-        printf("counter: %lli", counter);
-        printf("\n");
+        // printf("counter: %lli", counter);
+        // printf("\n");
         free(next_proc_array);
     }
       printf("counter: %lli\n", counter);
