@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
         counter--;
       }
     }
-    printf("counter: %li", counter);
+    printf("\t\tcounter: %li", counter);
     printf("\n");
     for (int rank = 1; rank < num_processors; ++rank) 
     {
