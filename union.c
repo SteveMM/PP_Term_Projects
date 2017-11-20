@@ -1,4 +1,6 @@
-#include "intersection.h"
+#include "union.h"
+
+const long long INDEX_NOT_FOUND = -1LL;
 
 long long binary_search(const long array[], const long num_to_find, const long long array_size)
 {
@@ -7,7 +9,7 @@ long long binary_search(const long array[], const long num_to_find, const long l
     long long midpoint = floor((first_index + last_index) / 2LL);
   
     // Assume error case initially
-    long long index_found = -1LL;
+    long long index_found = INDEX_NOT_FOUND;
   
     while (first_index <= last_index)
     {
@@ -126,26 +128,26 @@ void partition_data(const long long array_size, const long *arr_a, const long *a
     data->subarray_b_indices = arr_b_indices;
 }
 
-void get_intersection(const long *sub_arr_a, const long *sub_arr_b, const long long size_a, const long long size_b, long *sub_arr_c)
+void get_union(const long *sub_arr_a, const long *sub_arr_b, const long long size_a, const long long size_b, long *sub_arr_c)
 {
     long long arr_c_index = 0, i = 0, j = 0;
       
     while (i < size_a && j < size_b)
     {
         if (sub_arr_a[i] < sub_arr_b[j])
-            ++i;
+            sub_arr_c[arr_c_index++] = sub_arr_a[i++];
         else if (sub_arr_a[i] > sub_arr_b[j])
-            ++j;
+            sub_arr_c[arr_c_index++] = sub_arr_a[j++];
         else
         {
-            const long common_element = sub_arr_a[i];
-
-            // Append to sub_arr_c only if the current common element would be unique to the set
-            if (binary_search(sub_arr_c, common_element, arr_c_index + 1LL))
-                sub_arr_c[arr_c_index++] = common_element;
-            
-            ++i;
+            sub_arr_c[arr_c_index++] = sub_arr_a[i++];
             ++j;
         }
     }
+
+    while (i < size_a)
+        sub_arr_c[arr_c_index++] = sub_arr_a[i++];
+
+    while (j < size_b)
+        sub_arr_c[arr_c_index++] = sub_arr_a[j++];
 }

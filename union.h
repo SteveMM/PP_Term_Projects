@@ -46,4 +46,4 @@ void partition_data(const long long array_size, const long *arr_a, const long *a
   @param size_b Length of sub_arr_b
   @param sub_arr_c Pointer to the array to store the sorted intersection of sub_arr_a and sub_arr_b
 */
-void get_intersection(const long *sub_arr_a, const long *sub_arr_b, const long long size_a, const long long size_b, long *sub_arr_c);
+void get_union(const long *sub_arr_a, const long *sub_arr_b, const long long size_a, const long long size_b, long *sub_arr_c);
