@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include "union.h"
 
 // Macro definition(s)
 #ifndef MIN
