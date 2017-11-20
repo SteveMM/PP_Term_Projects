@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
     for (long long i = 0; i < chunk_sizes[0]; i++) {
       printf("%lli ", data_array[i]);
       counter++;
-      if (hash_map[i] > 1) {
+      if (hash_map[data_array[i]] > 0) {
         counter--;
         hash_map[i]++;
       }
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
         
         for (long long i = 0; i < next_array_chunk_size; i++) {
           counter++;
-          if (hash_map[i] > 1) {
+          if (hash_map[next_proc_array[i]] > 0) {
             counter--;
             hash_map[i]++;
           }
