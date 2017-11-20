@@ -115,6 +115,7 @@ int main(int argc, char *argv[])
           printf("%lli ", next_proc_array[i]);
         
         printf("\n\n");
+        free(next_proc_array);
     }
   }
 
