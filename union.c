@@ -36,7 +36,7 @@ long long binary_search(const long array[], const long num_to_find, const long l
 void partition_data(const long long array_size, const long *arr_a, const long *arr_b, const int num_processors, array_info *data)
 {
     // initialize arrays to return data
-    int *arr_a_size, *arr_b_size, *arr_a_indices, *arr_b_indices;
+    long long *arr_a_size, *arr_b_size, *arr_a_indices, *arr_b_indices;
     
     // malloc space fore each array
     arr_a_size = (long long*)malloc(num_processors * sizeof(long long));
