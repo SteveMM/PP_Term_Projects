@@ -99,6 +99,7 @@ int main(int argc, char *argv[])
   // }
 
   MPI_Barrier(MPI_COMM_WORLD);
+  printf("made it here");
   if (process_rank == ROOT) 
   {
     for (int rank = 1; rank < num_processors; ++rank) 
