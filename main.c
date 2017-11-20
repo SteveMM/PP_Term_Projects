@@ -113,10 +113,8 @@ int main(int argc, char *argv[])
         long *next_proc_array = (long *) malloc(next_array_chunk_size * sizeof(long));
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
-        printf("Beep Boop: Yo, received my shit!\n");
-        
-        //for (long long i = 0; i < next_array_chunk_size; i++) 
-          //printf("%lli ", next_proc_array[i]);
+        for (long long i = 0; i < next_array_chunk_size; i++) 
+          printf("%lli ", next_proc_array[i]);
         
         printf("\n\n");
       
