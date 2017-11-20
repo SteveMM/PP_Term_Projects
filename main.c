@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
   {
-    MPI_Send(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
+    MPI_Send(&chunk_sizes[process_rank], 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
     MPI_Send(data_array, chunk_sizes[process_rank], MPI_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
   } // else
   // {
