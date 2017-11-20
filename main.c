@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
   
   // Define problem paramaters
   long table_size = atol(argv[1]);
-  const int cells = (ceil((table_size * table_size) / 2) + ceil(table_size / 2));
+  const int cells = (ceil(((float) table_size * table_size) / 2) + ceil((float) table_size / 2));
 
   // TESTING
   if (process_rank == ROOT) 
