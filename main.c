@@ -82,7 +82,6 @@ int main(int argc, char *argv[])
   while (my_chunk > 0) 
   {
     data_array[index++] = i * j;
-    printf("(%lli,%lli) product: %li\n", i, j, i * j);
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
@@ -90,6 +89,12 @@ int main(int argc, char *argv[])
     }
   }
 
+  printf("here");
+  printf("here");
+  printf("here");
+  printf("here");
+  printf("here");
+  printf("here");
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
   {
