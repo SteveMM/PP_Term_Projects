@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
     int *hash_map = (int*) calloc(table_size * table_size, sizeof(int));
     // printf("rank %i chunk: %lli -> ", process_rank, chunk_sizes[0]);
     for (long long i = 0; i < chunk_sizes[0]; i++) {
-      printf("%lli ", data_array[i]);
+      // printf("%lli ", data_array[i]);
       counter++;
       hash_map[data_array[i]]++;
       if (hash_map[data_array[i]] == 2) {
