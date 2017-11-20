@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
     }
   }
 
+  printf("Made it here");
   if (process_rank != ROOT)
   {
     MPI_Send(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
