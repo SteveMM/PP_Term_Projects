@@ -97,10 +97,10 @@ int main(int argc, char *argv[])
   {
     MPI_Send(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
     MPI_Send(data_array, chunk, MPI_LONG, ROOT, process_rank, MPI_COMM_WORLD);
-  } else
-  {
-    MPI_Isend(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
-  }
+  // } else
+  // {
+  //   MPI_Isend(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
+  // }
 
   if (process_rank == ROOT) 
   {
