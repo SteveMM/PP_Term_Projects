@@ -107,7 +107,8 @@ int main(int argc, char *argv[])
     {
         long long next_array_chunk_size;
         MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
-        printf("here");
+        printf("here\n");
+        printf("chunk size: %lli", next_array_chunk_size);
         next_proc_array = (long *) realloc(next_proc_array, next_array_chunk_size);
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
