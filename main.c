@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
   
   for (int i = 0; i < num_processors; ++i)
   {
-      chunk_sizes[i] = floor(cells / num_processors);
+      chunk_sizes[i] = ceil(cells / num_processors);
     
       if (i < cells % num_processors)
         chunk_sizes[i] += 1;
