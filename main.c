@@ -110,12 +110,12 @@ int main(int argc, char *argv[])
         long *next_proc_array = malloc(next_array_chunk_size * sizeof(long));
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
-        printf("rank %i chunk: %lli : ", rank, next_array_chunk_size);
+        printf("rank %i chunk: %lli -> ", rank, next_array_chunk_size);
         
         for (long long i = 0; i < next_array_chunk_size; i++) 
           printf("%lli ", next_proc_array[i]);
         
-        printf("\n");
+        printf("\n\n");
     }
   }
 
