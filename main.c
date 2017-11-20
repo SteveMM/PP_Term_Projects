@@ -151,6 +151,7 @@ int main(int argc, char *argv[])
             hash_map[next_proc_array[i]]++;
           }
           printf("%lli ", next_proc_array[i]);
+          printf("counter: %li", counter);
         }
         
         printf("\n");
