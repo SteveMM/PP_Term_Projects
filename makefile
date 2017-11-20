@@ -1,4 +1,4 @@
-main:	main.o union.o
+main:	main.o
 	mpicc main.o -o main
 
 main.o:	main.c
