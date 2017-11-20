@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
         long long next_array_chunk_size;
         MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
         
-        long *next_proc_array = malloc(sizeof(next_array_chunk_size) * sizeof(long));
+        long *next_proc_array = malloc(next_array_chunk_size * sizeof(long));
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
         printf("rank %i chunk: %lli : ", rank, next_array_chunk_size);
