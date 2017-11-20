@@ -93,10 +93,9 @@ int main(int argc, char *argv[])
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
   {
-    printf("Process %i is sending...", process_rank);
     MPI_Send(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
     MPI_Send(data_array, chunk, MPI_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
-    printf("Process %i has sent.", process_rank);
+    printf("Boop Boop! Process %d here, sending to root!\n", process_rank);
   } // else
   // {
   //   MPI_Isend(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
