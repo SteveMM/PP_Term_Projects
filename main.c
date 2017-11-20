@@ -53,18 +53,32 @@ int main(int argc, char *argv[])
 
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
-  chunk = floor(cells / num_processors);
-
-  if (process_rank < cells % num_processors)
-        chunk += 1;
+  //chunk = floor(cells / num_processors);
+  int chunk_sizes[num_processors];
+  
+  for (int i = 0; i < num_processors; ++i)
+  {
+      chunk_sizes[i] = floor(cells / num_processors);
+    
+      if (i < cells % num_processors)
+        chunk_sizes[i] += 1;
+  }
 
   long *data_array = (long *)malloc(sizeof(long) * chunk);
 
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
-  long long my_chunk = chunk;
-  long long end = process_rank * my_chunk;
+  long long my_chunk = chunk_sizes[process_rank];
+  
+  long long end = 0LL;
+  
+  for (int i = 0; i < process_rank; ++i)
+  {
+     end += chunk_sizes[i];
+  }
+  
+  //long long end = process_rank * my_chunk;
   long long i = start;
   long long j = start;
   while (end > 0)
@@ -76,7 +90,7 @@ int main(int argc, char *argv[])
       }
   }
 
-  my_chunk = chunk;
+  my_chunk = chunk_sizes[process_rank];
   long product;
   long long index = 0;
   while (my_chunk > 0) 
@@ -94,7 +108,7 @@ int main(int argc, char *argv[])
   if (process_rank != ROOT)
   {
     MPI_Send(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
-    MPI_Send(data_array, chunk, MPI_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
+    MPI_Send(data_array, chunk_sizes[process_rank], MPI_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
   } // else
   // {
   //   MPI_Isend(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
@@ -103,7 +117,7 @@ int main(int argc, char *argv[])
   if (process_rank == ROOT) 
   { 
     printf("rank %i chunk: %lli -> ", process_rank, chunk);
-    for (long long i = 0; i < chunk; i++)
+    for (long long i = 0; i < chunk_sizes[0]; i++)
       printf("%lli ", data_array[i]);
     printf("\n");
     for (int rank = 1; rank < num_processors; ++rank) 
