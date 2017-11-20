@@ -122,14 +122,14 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
-    long *hash_map = (long*) calloc(table_size * table_size, sizeof(long));
+    int *hash_map = (int*) calloc(table_size * table_size, sizeof(int));
     printf("rank %i chunk: %lli -> ", process_rank, chunk_sizes[0]);
     for (long long i = 0; i < chunk_sizes[0]; i++) {
       printf("%lli ", data_array[i]);
       counter++;
       if (hash_map[data_array[i]] > 0) {
         counter--;
-        hash_map[i]++;
+        hash_map[data_array[i]]++;
       }
     }
     printf("\n");
@@ -146,9 +146,9 @@ int main(int argc, char *argv[])
         for (long long i = 0; i < next_array_chunk_size; i++) {
           counter++;
           if (hash_map[next_proc_array[i]] > 0) {
-            printf("hash_map[next_proc_array[i]", hash_map[next_proc_array[i]);
+            printf("hash_map[next_proc_array[i]: %i", hash_map[next_proc_array[i]);
             counter--;
-            hash_map[i]++;
+            hash_map[next_proc_array[i]]++;
           }
           printf("%lli ", next_proc_array[i]);
         }
