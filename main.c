@@ -132,6 +132,7 @@ int main(int argc, char *argv[])
         hash_map[data_array[i]]++;
       }
     }
+    printf("counter: %li", counter);
     printf("\n");
     for (int rank = 1; rank < num_processors; ++rank) 
     {
@@ -146,7 +147,6 @@ int main(int argc, char *argv[])
         for (long long i = 0; i < next_array_chunk_size; i++) {
           counter++;
           if (hash_map[next_proc_array[i]] > 0) {
-            printf("hash_map[next_proc_array[i]\n: %i", hash_map[next_proc_array[i]]);
             counter--;
             hash_map[next_proc_array[i]]++;
           }
