@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
-  printf("FIRST rank %lli chunk: %i\n", process_rank, chunk);
+  printf("FIRST rank %i chunk: %lli\n", process_rank, chunk);
   
   if (process_rank != ROOT)
   {
