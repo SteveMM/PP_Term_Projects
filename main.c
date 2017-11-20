@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
           }
           printf("%lli ", next_proc_array[i]);
         }
-        printf("counter: %li", counter);
+        printf("\t\tcounter: %li", counter);
         printf("\n");
         free(next_proc_array);
     }
