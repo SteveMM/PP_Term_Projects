@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
   while (my_chunk > 0) 
   {
     data_array[index++] = i * j;
-    printf("(%i,%i) product: %i\n", i, j, i * j);
+    printf("(%lli,%lli) product: %li\n", i, j, i * j);
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
