@@ -21,7 +21,7 @@ static const int TAG_CHUNK_SIZE = 0;
 static const int TAG_MATRIX_CHUNK_DATA = 1;
 
 // Global Counter
-static long counter = 0;
+static long long counter = 0LL;
 
 typedef struct {
   long num;
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
-    long *hash_map = (long*) calloc(table_size * table_size * sizeof(long));
+    long *hash_map = (long*) calloc(table_size * table_size, sizeof(long));
     printf("rank %i chunk: %lli -> ", process_rank, chunk_sizes[0]);
     for (long long i = 0; i < chunk_sizes[0]; i++) {
       printf("%lli ", data_array[i]);
@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
     }
   }
  
-  printf("counter: %i", counter);
+  printf("counter: %lli", counter);
 
   MPI_Barrier(MPI_COMM_WORLD);
   free(data_array);
