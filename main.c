@@ -76,13 +76,6 @@ int main(int argc, char *argv[])
       }
   }
 
-  printf("here");
-  printf("here");
-  printf("here");
-  printf("here");
-  printf("here");
-  printf("here\n");
-
   my_chunk = chunk;
   long product;
   long long index = 0;
@@ -95,14 +88,6 @@ int main(int argc, char *argv[])
       j++; i = j;
     }
   }
-
-  printf("here");
-  printf("here");
-  printf("here");
-  printf("here");
-  printf("here");
-  printf("here");
-
 
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
@@ -120,7 +105,7 @@ int main(int argc, char *argv[])
     {
         long long next_array_chunk_size;
         MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
-        
+        printf("here");
         long *next_proc_array = malloc(next_array_chunk_size * sizeof(long));
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
