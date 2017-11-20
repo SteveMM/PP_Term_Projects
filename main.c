@@ -146,6 +146,7 @@ int main(int argc, char *argv[])
         for (long long i = 0; i < next_array_chunk_size; i++) {
           counter++;
           if (hash_map[next_proc_array[i]] > 0) {
+            printf("hash_map[next_proc_array[i]", hash_map[next_proc_array[i]);
             counter--;
             hash_map[i]++;
           }
