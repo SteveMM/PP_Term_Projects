@@ -117,6 +117,7 @@ int main(int argc, char *argv[])
         
         printf("\n\n");
     }
+    free(next_proc_array);
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
