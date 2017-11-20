@@ -101,12 +101,13 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   {
+    long *next_proc_array
     for (int rank = 1; rank < num_processors; ++rank) 
     {
         long long next_array_chunk_size;
         MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
         printf("here");
-        long *next_proc_array = malloc(next_array_chunk_size * sizeof(long));
+        next_proc_array = realloc(next_proc_array, next_array_chunk_size * sizeof(long));
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
         printf("rank %i chunk: %lli -> ", rank, next_array_chunk_size);
@@ -115,7 +116,6 @@ int main(int argc, char *argv[])
           printf("%lli ", next_proc_array[i]);
         
         printf("\n\n");
-        free(next_proc_array);
     }
   }
 
