@@ -101,9 +101,9 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   {
-    long long next_array_chunk_size;
     for (int rank = 1; rank < num_processors; ++rank) 
-    {   
+    {
+        long long next_array_chunk_size;
         MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
         
         long *next_proc_array = malloc(next_array_chunk_size * sizeof(long));
