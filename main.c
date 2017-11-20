@@ -76,6 +76,13 @@ int main(int argc, char *argv[])
       }
   }
 
+  printf("here");
+  printf("here");
+  printf("here");
+  printf("here");
+  printf("here");
+  printf("here");
+
   my_chunk = chunk;
   long product;
   long long index = 0;
@@ -89,12 +96,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  printf("here");
-  printf("here");
-  printf("here");
-  printf("here");
-  printf("here");
-  printf("here");
+
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
   {
