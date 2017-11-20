@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include "union.h"
 
 // Macro definition(s)
 #ifndef MIN
@@ -15,13 +16,13 @@
 
 // Constants
 static const int ROOT = 0;
-static const int COUNT = 1;
+
+// Send/Recv Tags
+static const int TAG_CHUNK_SIZE = 0;
+static const int TAG_MATRIX_CHUNK_DATA = 1;
 
 int main(int argc, char *argv[])
 {   
-  MPI_Status status;
-  MPI_Request request;
-
   int process_rank;
   int num_processors;
 
@@ -40,7 +41,7 @@ int main(int argc, char *argv[])
   }
   
   // Define problem paramaters
-  int table_size = atol(argv[1]);
+  long table_size = atol(argv[1]);
   int chunk = 0, i_start = 0;
   const int cells = ((table_size * table_size) / 2) + (table_size / 2);
 
@@ -91,21 +92,29 @@ int main(int argc, char *argv[])
 
   MPI_Barrier(MPI_COMM_WORLD);
   printf("FIRST rank %i chunk: %i\n", process_rank, chunk);
-  MPI_Isend(&chunk, COUNT, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
-  MPI_Isend(data_array, chunk, MPI_INT, ROOT, process_rank, MPI_COMM_WORLD, &request);
-  MPI_Barrier(MPI_COMM_WORLD);
+  
+  if (process_rank != ROOT)
+  {
+    MPI_Send(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
+    MPI_Send(data_array, chunk, MPI_LONG, ROOT, process_rank, MPI_COMM_WORLD);
+  }
 
-  if (process_rank == ROOT) {
-    for (int rank = 0; rank < num_processors; rank++) {
-      // MPI_Irecv(&chunk, COUNT, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
-      // MPI_Irecv(data_array, chunk, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &request);
-      MPI_Recv(&chunk, COUNT, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &status);
-      MPI_Recv(data_array, chunk, MPI_INT, ROOT, rank, MPI_COMM_WORLD, &status);
-      printf("rank %i chunk: %i : ", rank, chunk);
-      for (int i = 0; i < chunk; i++) {
-        printf("%i ", data_array[i]);
-      }
-      printf("\n");
+  if (process_rank == ROOT) 
+  {
+    for (int rank = 1; rank < num_processors; ++rank) 
+    {
+        long long next_array_chunk_size;
+        MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
+        
+        long *next_proc_array = malloc(sizeof(next_array_chunk_size) * sizeof(long));
+        MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
+        
+        printf("rank %i chunk: %i : ", rank, next_array_chunk_size);
+        
+        for (int i = 0; i < next_array_chunk_size; i++) 
+          printf("%i ", next_proc_array[i]);
+        
+        printf("\n");
     }
   }
 
