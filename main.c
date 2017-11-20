@@ -42,7 +42,6 @@ int main(int argc, char *argv[])
   
   // Define problem paramaters
   long table_size = atol(argv[1]);
-  long long chunk = 0, i_start = 0;
   const int cells = ((table_size * table_size) / 2) + (table_size / 2);
 
   // TESTING
@@ -64,7 +63,7 @@ int main(int argc, char *argv[])
         chunk_sizes[i] += 1;
   }
 
-  long *data_array = (long *)malloc(sizeof(long) * chunk);
+  long *data_array = (long *)malloc(sizeof(long) * chunk_sizes[process_rank]);
 
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
@@ -116,7 +115,7 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
-    printf("rank %i chunk: %lli -> ", process_rank, chunk);
+    printf("rank %i chunk: %lli -> ", process_rank, chunk_sizes[0]);
     for (long long i = 0; i < chunk_sizes[0]; i++)
       printf("%lli ", data_array[i]);
     printf("\n");
