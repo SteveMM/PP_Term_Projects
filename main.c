@@ -116,8 +116,8 @@ int main(int argc, char *argv[])
         
         printf("Beep Boop: Yo, received my shit!\n");
         
-        for (long long i = 0; i < next_array_chunk_size; i++) 
-          printf("%lli ", next_proc_array[i]);
+        //for (long long i = 0; i < next_array_chunk_size; i++) 
+          //printf("%lli ", next_proc_array[i]);
         
         printf("\n\n");
       
