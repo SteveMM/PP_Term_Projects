@@ -98,8 +98,9 @@ int main(int argc, char *argv[])
   //   MPI_Isend(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
   // }
 
+  printf("Before MPI_COMM_WORLD");
   MPI_Barrier(MPI_COMM_WORLD);
-  printf("made it here");
+  printf("After MPI_COMM_WORLD");
   if (process_rank == ROOT) 
   {
     for (int rank = 1; rank < num_processors; ++rank) 
