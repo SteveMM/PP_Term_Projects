@@ -103,6 +103,7 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
+    printf("rank %i chunk: %lli -> ", process_rank, chunk);
     for (long long i = 0; i < chunk; i++)
       printf("%lli ", data_array[i]);
     for (int rank = 1; rank < num_processors; ++rank) 
@@ -117,8 +118,6 @@ int main(int argc, char *argv[])
         
         for (long long i = 0; i < next_array_chunk_size; i++) 
           printf("%lli ", next_proc_array[i]);
-        
-        printf("\n\n");
       
         free(next_proc_array);
     }
