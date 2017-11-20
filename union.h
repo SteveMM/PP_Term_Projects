@@ -35,7 +35,7 @@ long long binary_search(const long array[], const long num_to_find, const long l
 void partition_data(const long long array_size, const long *arr_a, const long *arr_b, const int num_processors, array_info *data);
 
 /**
-  Determines the intersection of two sub-arrays and stores the results in a third sub-array
+  Determines the union of two sub-arrays and stores the results in a third sub-array
   Ex: a = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
       b = { 2, 2, 3, 4, 5, 6, 7, 7, 8, 9 }
       c = { 2, 3, 4, 5, 6, 7, 8, 9 }
