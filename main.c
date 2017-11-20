@@ -123,7 +123,8 @@ int main(int argc, char *argv[])
         free(next_proc_array);
     }
   }
-
+  
+  free(data_array);
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize();
   return 0;
