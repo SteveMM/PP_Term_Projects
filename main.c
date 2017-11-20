@@ -21,6 +21,14 @@ static const int ROOT = 0;
 static const int TAG_CHUNK_SIZE = 0;
 static const int TAG_MATRIX_CHUNK_DATA = 1;
 
+// Global Counter
+static long counter = 0;
+
+typedef struct {
+  long num;
+  int count;
+} hash_entry;
+
 int main(int argc, char *argv[])
 {   
   int process_rank;
@@ -115,9 +123,15 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
+    long *hash_map = (long*) calloc(table_size * table_size * sizeof(long));
     printf("rank %i chunk: %lli -> ", process_rank, chunk_sizes[0]);
-    for (long long i = 0; i < chunk_sizes[0]; i++)
+    for (long long i = 0; i < chunk_sizes[0]; i++) {
       printf("%lli ", data_array[i]);
+      counter++;
+      if (hash_map[i] > 0) {
+        counter--;
+        hash_map[i]++;
+      }
     printf("\n");
     for (int rank = 1; rank < num_processors; ++rank) 
     {
@@ -129,14 +143,22 @@ int main(int argc, char *argv[])
         long *next_proc_array = (long *) malloc(next_array_chunk_size * sizeof(long));
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
-        for (long long i = 0; i < next_array_chunk_size; i++) 
+        for (long long i = 0; i < next_array_chunk_size; i++) {
+          counter++;
+          if (hash_map[i] > 0) {
+            counter--;
+            hash_map[i]++;
+          }
           printf("%lli ", next_proc_array[i]);
+        }
         
         printf("\n");
         free(next_proc_array);
     }
   }
  
+  printf("counter: %i", counter);
+
   MPI_Barrier(MPI_COMM_WORLD);
   free(data_array);
   
