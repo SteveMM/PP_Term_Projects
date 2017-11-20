@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
   
   // Define problem paramaters
   long table_size = atol(argv[1]);
-  int chunk = 0, i_start = 0;
+  long long chunk = 0, i_start = 0;
   const int cells = ((table_size * table_size) / 2) + (table_size / 2);
 
   // TESTING
