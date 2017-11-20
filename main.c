@@ -91,8 +91,6 @@ int main(int argc, char *argv[])
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
-  printf("FIRST rank %i chunk: %lli\n", process_rank, chunk);
-  
   if (process_rank != ROOT)
   {
     MPI_Send(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
@@ -102,7 +100,6 @@ int main(int argc, char *argv[])
   //   MPI_Isend(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
   // }
 
-  MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank == ROOT) 
   {
     for (int rank = 1; rank < num_processors; ++rank) 
