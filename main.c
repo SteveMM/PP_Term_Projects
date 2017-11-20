@@ -155,9 +155,8 @@ int main(int argc, char *argv[])
         printf("\n");
         free(next_proc_array);
     }
+      printf("counter: %lli", counter);
   }
- 
-  printf("counter: %lli", counter);
 
   MPI_Barrier(MPI_COMM_WORLD);
   free(data_array);
