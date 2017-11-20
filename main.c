@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
   for (int i = 0; i < num_processors; ++i)
   {
       chunk_sizes[i] = floor((float) cells / num_processors);
-      printf("(float) cells / num_processors) %i", (float) cells / num_processors);
+      printf("(float) cells / num_processors) %d", (float) cells / num_processors);
     
       if (i < cells % num_processors)
         chunk_sizes[i] += 1;
