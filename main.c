@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   {
-    long *next_proc_array
+    long *next_proc_array;
     for (int rank = 1; rank < num_processors; ++rank) 
     {
         long long next_array_chunk_size;
