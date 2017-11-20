@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
   printf("here");
   printf("here");
   printf("here");
-  printf("here");
+  printf("here\n");
 
   my_chunk = chunk;
   long product;
@@ -95,6 +95,13 @@ int main(int argc, char *argv[])
       j++; i = j;
     }
   }
+
+  printf("here");
+  printf("here");
+  printf("here");
+  printf("here");
+  printf("here");
+  printf("here");
 
 
   MPI_Barrier(MPI_COMM_WORLD);
