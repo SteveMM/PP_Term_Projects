@@ -121,16 +121,18 @@ int main(int argc, char *argv[])
   {
     // data_array[index++] = i * j;
     product = i * j;
+
+    if (TESTBIT(visited_bit_map, product)) {
+      CLEARBIT(unique_bit_map, product);
+      printf("clear %lli ", product);
+    }
     
     if (!TESTBIT(visited_bit_map, product)) {
       SETBIT(unique_bit_map, product);
       SETBIT(visited_bit_map, product);
       printf("set %lli ", product);
     } 
-    if (TESTBIT(visited_bit_map, product)) {
-      CLEARBIT(unique_bit_map, product);
-      printf("clear %lli ", product);
-    }
+
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
