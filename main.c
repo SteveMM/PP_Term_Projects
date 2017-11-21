@@ -174,6 +174,8 @@ int main(int argc, char *argv[])
           if ((TESTBIT(unique_bit_map, i) ^ TESTBIT(incoming_bit_map, i)) && !TESTBIT(visited_bit_map, i)) {
             SETBIT(unique_bit_map, i);
             SETBIT(visited_bit_map, i);
+          } else {
+            CLEARBIT(unique_bit_map, i);
           }
         }
         
