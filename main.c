@@ -66,8 +66,7 @@ int main(int argc, char *argv[])
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
   //chunk = floor(cells / num_processors);
-  long long chunk_sizes[num_processors];
-  
+  long chunk_sizes[num_processors];
   for (int i = 0; i < num_processors; ++i)
   {
       chunk_sizes[i] = floor((float) cells / num_processors);
@@ -138,7 +137,7 @@ int main(int argc, char *argv[])
         SETBIT(bit_map, data_array[i]);
       }
     }
-    
+
     for (int rank = 1; rank < num_processors; ++rank) 
     {
         long long next_array_chunk_size;
