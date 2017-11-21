@@ -117,6 +117,7 @@ int main(int argc, char *argv[])
 
   long long int product = 0;
 
+  printf("products: ");
   while (my_chunk > 0) 
   {
     // data_array[index++] = i * j;
