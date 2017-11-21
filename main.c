@@ -180,14 +180,13 @@ int main(int argc, char *argv[])
         //   }
         // }
 
+        // free(next_proc_array);
+    }
         for (long long int i = 0; i < num_values; i++) {
           if (TESTBIT(unique_bit_map, i)) {
             counter++;
           }
         }
-        printf("process %i counter %lli\n", rank, counter);
-        // free(next_proc_array);
-    }
       printf("counter: %lli\n", counter);
   }
 
