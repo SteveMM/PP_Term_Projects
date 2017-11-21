@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
   {
     // MPI_Send(&chunk_sizes[process_rank], 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
     // MPI_Send(data_array, chunk_sizes[process_rank], MPI_LONG_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
-    MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
+    MPI_Send(unique_bit_map, n + 1, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
   }
 
   if (process_rank == ROOT) 
