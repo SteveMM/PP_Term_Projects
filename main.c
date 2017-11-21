@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
         int incoming_bit_map[n];
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
-        for (int i = 0; i <= num_values; i++) {
+        for (long long int i = 0; i <= num_values; i++) {
           // printf("looking at: %i", i);
           if (TESTBIT(incoming_bit_map, i)) {
             // printf("...set.");
