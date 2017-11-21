@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &process_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &num_processors);
-  printf("Made it here\n");
 
   if (argc < 2)
   {
@@ -72,6 +71,8 @@ int main(int argc, char *argv[])
       if (i < cells % num_processors)
         chunk_sizes[i] += 1;
   }
+
+  printf("Made it here\n");
 
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
