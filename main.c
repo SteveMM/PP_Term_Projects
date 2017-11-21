@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
   my_chunk = chunk_sizes[process_rank];
   long long index = 0;
 
-  const int n = ceil(num_values / sizeof(int)) + 1;
+  const int n = ceil(num_values / sizeof(int));
   int unique_bit_map[n];
   int visited_bit_map[n];
 
@@ -112,8 +112,10 @@ int main(int argc, char *argv[])
   {
     product = i * j;
     if (!TESTBIT(visited_bit_map, product)) {
-      SETBIT(unique_bit_map, product);
-      SETBIT(visited_bit_map, product);
+      unique_bit_map[product] = 1;
+      visited_bit_map[product] = 0;
+      // SETBIT(unique_bit_map, product);
+      // SETBIT(visited_bit_map, product);
       printf("set %lli ", product);
     } else {
       CLEARBIT(unique_bit_map, product);
