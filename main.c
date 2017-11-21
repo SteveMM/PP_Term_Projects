@@ -170,8 +170,6 @@ int main(int argc, char *argv[])
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
-  free(data_array);
-  
   MPI_Finalize();
   return 0;
 }
