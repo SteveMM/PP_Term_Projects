@@ -116,29 +116,27 @@ int main(int argc, char *argv[])
 
   long long int product = 0;
 
-  printf("products: ");
+  printf("\nproducts: ");
   while (my_chunk > 0) 
   {
     // data_array[index++] = i * j;
     product = i * j;
-
-    if (TESTBIT(visited_bit_map, product)) {
-      CLEARBIT(unique_bit_map, product);
-      printf("clear %lli ", product);
-    }
     
     if (!TESTBIT(visited_bit_map, product)) {
       SETBIT(unique_bit_map, product);
       SETBIT(visited_bit_map, product);
       printf("set %lli ", product);
-    } 
-
+    } else {
+      CLEARBIT(unique_bit_map, product);
+      printf("clear %lli ", product);
+    }
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
       j++; i = j;
     }
   }
+
   printf("\n");
 
   MPI_Barrier(MPI_COMM_WORLD);
@@ -157,8 +155,10 @@ int main(int argc, char *argv[])
       final_bit_map[i] = 0;
     }
 
+    int is_unique;
     for (int i = 0; i < num_values; i++) {
-      if ((TESTBIT(final_bit_map, i) ^ TESTBIT(unique_bit_map, i)) && !TESTBIT(visited_bit_map, i)) {
+      is_unique = TESTBIT(final_bit_map, i) ^ TESTBIT(unique_bit_map, i);
+      if (is_unique && !TESTBIT(visited_bit_map, i)) {
         SETBIT(final_bit_map, i);
         SETBIT(visited_bit_map, i);
       }
