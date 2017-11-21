@@ -142,11 +142,15 @@ int main(int argc, char *argv[])
     }
 
     for (int i = 0; i < num_values; i++) {
+      printf("looking at: %i", i);
       if ((TESTBIT(final_bit_map, i) ^ TESTBIT(unique_bit_map, i)) && !(TESTBIT(visited_bit_map, i))) {
+        printf("...set.");
         SETBIT(final_bit_map, i);
         SETBIT(visited_bit_map, i);
       }
     }
+
+    printf("\n");
 
     for (int rank = 1; rank < num_processors; ++rank) 
     {
@@ -154,11 +158,14 @@ int main(int argc, char *argv[])
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
         for (int i = 0; i < num_values; i++) {
+          printf("looking at: %i", i);
           if ((TESTBIT(final_bit_map, i) ^ TESTBIT(incoming_bit_map, i)) && !(TESTBIT(visited_bit_map, i))) {
+            printf("...set.");
             SETBIT(final_bit_map, i);
             SETBIT(visited_bit_map, i);
           }
         }
+        printf("\n");
     }
         printf("\nunique: ");
         for (long long int i = 0; i < num_values; i++) {
