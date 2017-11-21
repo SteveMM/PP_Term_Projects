@@ -94,16 +94,14 @@ int main(int argc, char *argv[])
       }
   }
 
+  printf("Made it here\n");
+
   my_chunk = chunk_sizes[process_rank];
   const int n = ceil(num_values / sizeof(int));
   int unique_bit_map[n];
 
-  printf("Made it here\n");
-
   for (int i = 0; i < n; i++)
     unique_bit_map[i] = 0;
-
-  printf("Made it here\n");
 
   long long int product = 0;
   // printf("\nproducts: ");
