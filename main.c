@@ -64,11 +64,9 @@ int main(int argc, char *argv[])
   long table_size = atol(argv[1]);
   long long int num_values = table_size * table_size;
   const int cells = ((num_values / 2) + ceil((float) table_size / 2));
-  printf("cells: %i", cells);
 
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
-  //chunk = floor(cells / num_processors);
   unsigned long long chunk_sizes[num_processors];
   for (int i = 0; i < num_processors; ++i)
   {
@@ -146,6 +144,9 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
+    for (int i = 0; i < n; i++) {
+      visited_bit_map[i] = 0;
+    }
     // const int n = table_size * table_size;
     // int bit_map[n];
 
@@ -170,7 +171,10 @@ int main(int argc, char *argv[])
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
         for (long long int i = 0; i < num_values; i++) {
-          unique_bit_map[i] = unique_bit_map[i] ^ incoming_bit_map[i];
+          if ((TESTBIT(unique_bit_map, i) ^ TESTBIT(incoming_bit_map, i)) && !TESTBIT(visited_bit_map, i)) {
+            SETBIT(unique_bit_map, i);
+            SETBIT(visited_bit_map, i)
+          }
         }
         
         // for (long long i = 0; i < next_array_chunk_size; i++) {
