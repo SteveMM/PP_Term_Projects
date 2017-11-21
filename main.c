@@ -164,6 +164,8 @@ int main(int argc, char *argv[])
             printf("...set.");
             SETBIT(final_bit_map, i);
             SETBIT(visited_bit_map, i);
+          } else {
+            CLEARBIT(final_bit_map, i);
           }
           printf("\n");
         }
