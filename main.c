@@ -34,7 +34,7 @@ static const int TAG_MATRIX_CHUNK_DATA = 1;
 static const int TAG_BIT_MAP = 1;
 
 // Global Counter
-static long long counter = 0LL;
+static unsigned long long counter = 0LL;
 
 int main(int argc, char *argv[])
 {   
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
   printf("n: %li\n", n);
   int *unique_bit_map = (int*) malloc(n * sizeof(int));
 
-  for (long long i = 0; i < n; i++)
+  for (unsigned long long i = 0; i < n; i++)
     unique_bit_map[i] = 0;
 
   unsigned long long int product = 0;
@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
     for (int rank = 1; rank < num_processors; ++rank) {
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
-        for (long long int i = 0; i <= num_values; i++) {
+        for (unsigned long long int i = 0; i <= num_values; i++) {
           // printf("looking at: %i", i);
           if (TESTBIT(incoming_bit_map, i)) {
             // printf("...set.");
@@ -139,13 +139,13 @@ int main(int argc, char *argv[])
         // printf("\n");
     }
         // printf("\nunique: ");
-        for (long long int i = 0; i <= num_values; i++) {
+        for (unsigned long long int i = 0; i <= num_values; i++) {
           if (TESTBIT(unique_bit_map, i)) {
             // printf("%lli ", i);
             counter++;
           }
         }
-      printf("counter: %lli\n", counter);
+      printf("counter: %llu\n", counter);
       free(incoming_bit_map);
   }
 
