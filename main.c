@@ -184,8 +184,8 @@ int main(int argc, char *argv[])
           if (TESTBIT(unique_bit_map, i)) {
             counter++;
           }
-          printf("process %i counter %lli", rank, counter);
         }
+        printf("process %i counter %lli\n", rank, counter);
         // free(next_proc_array);
     }
       printf("counter: %lli\n", counter);
