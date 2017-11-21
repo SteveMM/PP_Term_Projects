@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
         printf("\n");
     }
         printf("\nunique: ");
-        for (long long int i = 0; i < num_values; i++) {
+        for (long long int i = 0; i <= num_values; i++) {
           if (TESTBIT(final_bit_map, i)) {
             printf("%lli ", i);
             counter++;
