@@ -144,11 +144,13 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
+    int final_bit_map[n];
     for (int i = 0; i < n; i++) {
       visited_bit_map[i] = 0;
+      final_bit_map[i] = 0;
     }
 
-    int final_bit_map[n];
+    
 
     for (int i = 0; i < num_values; i++) {
       if ((TESTBIT(final_bit_map, i) ^ TESTBIT(unique_bit_map, i)) && !TESTBIT(visited_bit_map, i)) {
