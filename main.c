@@ -119,7 +119,6 @@ int main(int argc, char *argv[])
   printf("\nproducts: ");
   while (my_chunk > 0) 
   {
-    // data_array[index++] = i * j;
     product = i * j;
     
     if (!TESTBIT(visited_bit_map, product)) {
@@ -142,9 +141,7 @@ int main(int argc, char *argv[])
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
   {
-    // MPI_Send(&chunk_sizes[process_rank], 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
-    // MPI_Send(data_array, chunk_sizes[process_rank], MPI_LONG_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
-    MPI_Send(unique_bit_map, n + 1, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
+    MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
   }
 
   if (process_rank == ROOT) 
@@ -157,52 +154,25 @@ int main(int argc, char *argv[])
 
     int is_unique;
     for (int i = 0; i < num_values; i++) {
-      is_unique = TESTBIT(final_bit_map, i) ^ TESTBIT(unique_bit_map, i);
+      is_unique = TESTBIT(final_bit_map, i) | TESTBIT(unique_bit_map, i);
       if (is_unique && !TESTBIT(visited_bit_map, i)) {
         SETBIT(final_bit_map, i);
         SETBIT(visited_bit_map, i);
       }
     }
 
-
-    // const int n = table_size * table_size;
-    // int bit_map[n];
-
-    // for (int i = 0; i < n; i++)
-    //   bit_map[i] = 0; 
-
-    // for (int i = 0; i < chunk_sizes[0]; i++) {
-    //   if (!(TESTBIT(bit_map, data_array[i]))) {
-    //     counter++;
-    //     SETBIT(bit_map, data_array[i]);
-    //   }
-    // }
-
     for (int rank = 1; rank < num_processors; ++rank) 
     {
-        // long long next_array_chunk_size;
-        // MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);  
-      
-        // long *next_proc_array = (long *) malloc(next_array_chunk_size * sizeof(long));
-        // MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         int incoming_bit_map[n];
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
         for (int i = 0; i < num_values; i++) {
-          if ((TESTBIT(final_bit_map, i) ^ TESTBIT(incoming_bit_map, i)) && !TESTBIT(visited_bit_map, i)) {
+          is_unique = TESTBIT(final_bit_map, i) | TESTBIT(unique_bit_map, i);
+          if ((is_unique && !TESTBIT(visited_bit_map, i)) {
             SETBIT(final_bit_map, i);
             SETBIT(visited_bit_map, i);
           }
         }
-        
-        // for (long long i = 0; i < next_array_chunk_size; i++) {
-        //   if (!(TESTBIT(bit_map, next_proc_array[i]))) {
-        //     counter++;
-        //     SETBIT(bit_map, next_proc_array[i]);
-        //   }
-        // }
-
-        // free(next_proc_array);
     }
         printf("\nunique: ");
         for (long long int i = 0; i < num_values; i++) {
