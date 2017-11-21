@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 
     int is_unique;
     for (int i = 0; i < num_values; i++) {
-      is_unique = TESTBIT(final_bit_map, i) ^ TESTBIT(unique_bit_map, i);
+      is_unique = TESTBIT(final_bit_map, i) | TESTBIT(unique_bit_map, i);
       if (is_unique && !TESTBIT(visited_bit_map, i)) {
         SETBIT(final_bit_map, i);
         SETBIT(visited_bit_map, i);
