@@ -94,8 +94,6 @@ int main(int argc, char *argv[])
       }
   }
 
-  printf("Made it here\n");
-
   my_chunk = chunk_sizes[process_rank];
   const int n = ceil(num_values / sizeof(int));
   int unique_bit_map[n];
@@ -116,6 +114,8 @@ int main(int argc, char *argv[])
       j++; i = j;
     }
   }
+
+  printf("Made it here\n");
 
   // printf("\n");
 
