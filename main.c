@@ -65,10 +65,10 @@ int main(int argc, char *argv[])
   unsigned long long chunk;
   for (int i = 0; i < num_processors; ++i)
   {
-      chunk_sizes[i] = floor((float) cells / num_processors);
+      chunk = floor((float) cells / num_processors);
     
       if (i < cells % num_processors)
-        chunk_sizes[i] += 1;
+        chunk += 1;
   }
 
   // Calculate all (i,j) indicies for each process to start at
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
   
   for (int i = 0; i < process_rank; ++i)
   {
-     end += chunk_sizes[i];
+     end += chunk;
   }
   
   unsigned long long i = start;
