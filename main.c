@@ -130,9 +130,9 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
+    int *incoming_bit_map = (int*) malloc(n);
     for (int rank = 1; rank < num_processors; ++rank) 
     {
-        int *incoming_bit_map = (int*) malloc(n);
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
         for (long long int i = 0; i <= num_values; i++) {
@@ -153,11 +153,11 @@ int main(int argc, char *argv[])
           }
         }
       printf("counter: %lli\n", counter);
+      free(incoming_bit_map);
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
   free(unique_bit_map);
-  free(incoming_bit_map);
   MPI_Finalize();
   return 0;
 }
