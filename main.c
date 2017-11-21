@@ -168,7 +168,10 @@ int main(int argc, char *argv[])
         int incoming_bit_map[n];
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
-        unique_bit_map = unique_bit_map ^ incoming_bit_map;
+        for (long long int i = 0; i < values; i++) {
+          unique_bit_map[i] = unique_bit_map[i] ^ incoming_bit_map[i];
+        }
+        
         
         // for (long long i = 0; i < next_array_chunk_size; i++) {
         //   if (!(TESTBIT(bit_map, next_proc_array[i]))) {
@@ -180,7 +183,7 @@ int main(int argc, char *argv[])
         for (long long int i = 0; i < values; i++) {
           if (TESTBIT(unique_bit_map, i))
         }
-        free(next_proc_array);
+        // free(next_proc_array);
     }
       printf("counter: %lli\n", counter);
   }
