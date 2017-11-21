@@ -139,9 +139,9 @@ int main(int argc, char *argv[])
     // printf("rank %i chunk: %lli -> ", process_rank, chunk_sizes[0]);
     for (int i = 0; i < chunk_sizes[0]; i++) {
       // printf("%lli ", data_array[i]);
-      if (!(TESTBIT(bit_map, i))) {
+      if (!(TESTBIT(bit_map, data_array[i]))) {
         counter++;
-        SETBIT(bit_map, i);
+        SETBIT(bit_map, data_array[i]);
       }
       // hash_map[data_array[i]]++;
       // if (hash_map[data_array[i]] == 2) {
@@ -161,9 +161,9 @@ int main(int argc, char *argv[])
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
         for (long long i = 0; i < next_array_chunk_size; i++) {
-          if (!(TESTBIT(bit_map, i))) {
+          if (!(TESTBIT(bit_map, next_proc_array[i]))) {
             counter++;
-            SETBIT(bit_map, i);
+            SETBIT(bit_map, next_proc_array[i]);
           }
           // counter++;
           // hash_map[next_proc_array[i]]++;
