@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &process_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &num_processors);
+  printf("Made it here\n");
 
   if (argc < 2)
   {
@@ -116,7 +117,7 @@ int main(int argc, char *argv[])
   }
 
   // printf("\n");
-  printf("Made it here\n");
+
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
