@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
   printf("Made it here 1\n");
   const int n = ceil(num_values / sizeof(int));
   printf("Made it here 2\n");
-  int unique_bit_map[n];
+  int *unique_bit_map = (int*) malloc(n);
   printf("Made it here 3\n");
 
   for (int i = 0; i < n; i++)
@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
   { 
     for (int rank = 1; rank < num_processors; ++rank) 
     {
-        int incoming_bit_map[n];
+        int *incoming_bit_map = (int*) malloc(n);
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
         for (long long int i = 0; i <= num_values; i++) {
@@ -156,6 +156,8 @@ int main(int argc, char *argv[])
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
+  free(unique_bit_map);
+  free(incoming_bit_map);
   MPI_Finalize();
   return 0;
 }
