@@ -144,10 +144,11 @@ int main(int argc, char *argv[])
     for (int i = 0; i < num_values; i++) {
       printf("looking at: %i", i);
       if ((TESTBIT(final_bit_map, i) ^ TESTBIT(unique_bit_map, i)) && !(TESTBIT(visited_bit_map, i))) {
-        printf("...set.\n");
+        printf("...set.");
         SETBIT(final_bit_map, i);
         SETBIT(visited_bit_map, i);
       }
+      printf("\n");
     }
 
     printf("\n");
@@ -160,10 +161,11 @@ int main(int argc, char *argv[])
         for (int i = 0; i < num_values; i++) {
           printf("looking at: %i", i);
           if ((TESTBIT(final_bit_map, i) ^ TESTBIT(incoming_bit_map, i)) && !(TESTBIT(visited_bit_map, i))) {
-            printf("...set.\n");
+            printf("...set.");
             SETBIT(final_bit_map, i);
             SETBIT(visited_bit_map, i);
           }
+          printf("\n");
         }
         printf("\n");
     }
