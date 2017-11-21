@@ -105,12 +105,12 @@ int main(int argc, char *argv[])
     unique_bit_map[i] = 0;
 
   long long int product = 0;
-  printf("\nproducts: ");
+  // printf("\nproducts: ");
   while (my_chunk > 0) 
   {
     product = i * j;
     SETBIT(unique_bit_map, product);
-    printf("set %lli ", product);
+    // printf("set %lli ", product);
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
@@ -132,23 +132,23 @@ int main(int argc, char *argv[])
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
         for (int i = 0; i <= num_values; i++) {
-          printf("looking at: %i", i);
+          // printf("looking at: %i", i);
           if (TESTBIT(incoming_bit_map, i)) {
-            printf("...set.");
+            // printf("...set.");
             SETBIT(unique_bit_map, i);
           }
           printf("\n");
         }
         printf("\n");
     }
-        printf("\nunique: ");
+        // printf("\nunique: ");
         for (long long int i = 0; i <= num_values; i++) {
           if (TESTBIT(unique_bit_map, i)) {
             printf("%lli ", i);
             counter++;
           }
         }
-      printf("\nvalues: %lli, counter: %lli\n", num_values, counter);
+      // printf("counter: %lli\n" counter);
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
