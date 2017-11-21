@@ -95,8 +95,8 @@ int main(int argc, char *argv[])
   }
 
   my_chunk = chunk_sizes[process_rank];
-  const int n = ceil(num_values / sizeof(int));
-  printf("n: %i", n);
+  const long n = ceil(num_values / sizeof(int));
+  printf("n: %li", n);
   int *unique_bit_map = (int*) malloc(n);
 
   for (int i = 0; i < n; i++)
