@@ -57,8 +57,8 @@ int main(int argc, char *argv[])
   
   // Define problem paramaters
   long table_size = atol(argv[1]);
-  unsigned long long int num_values = table_size * table_size;
-  const long int cells = ((num_values / 2) + ceil((float) table_size / 2));
+  const unsigned long long int num_values = table_size * table_size;
+  const unsigned long long int cells = ((num_values / 2) + ceil((float) table_size / 2));
 
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
@@ -74,8 +74,8 @@ int main(int argc, char *argv[])
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
-  long long my_chunk = chunk_sizes[process_rank];
-  long long end = 0LL;
+  unsigned long long my_chunk = chunk_sizes[process_rank];
+  unsigned long long end = 0LL;
   
   for (int i = 0; i < process_rank; ++i)
   {
@@ -94,14 +94,14 @@ int main(int argc, char *argv[])
   }
 
   my_chunk = chunk_sizes[process_rank];
-  const long long n = ceil(num_values / sizeof(int));
+  const unsigned long long n = ceil(num_values / sizeof(int));
   printf("n: %li\n", n);
   int *unique_bit_map = (int*) malloc(n * sizeof(int));
 
   for (long long i = 0; i < n; i++)
     unique_bit_map[i] = 0;
 
-  long long int product = 0;
+  unsigned long long int product = 0;
   // printf("\nproducts: ");
   while (my_chunk > 0) 
   {
