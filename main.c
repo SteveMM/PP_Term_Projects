@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
   //chunk = floor(cells / num_processors);
-  long long chunk_sizes[num_processors];
+  unsigned long long chunk_sizes[num_processors];
   for (int i = 0; i < num_processors; ++i)
   {
       chunk_sizes[i] = floor((float) cells / num_processors);
