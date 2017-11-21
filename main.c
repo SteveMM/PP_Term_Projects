@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
         for (long long int i = 0; i < num_values; i++) {
-          printf("%i", incoming_bit_map[i]);
+          printf("%i", incoming_bit_map[i] & 0x01);
           unique_bit_map[i] = unique_bit_map[i] ^ incoming_bit_map[i];
         }
         printf("\n");
