@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
         chunk_sizes[i] += 1;
   }
 
-  printf("chunk sizes: %llu", chunk_sizes[process_rank]);
+  printf("chunk sizes: %llu\n", chunk_sizes[process_rank]);
   long *data_array = (long *)malloc(sizeof(long) * chunk_sizes[process_rank]);
 
   // Calculate all (i,j) indicies for each process to start at
