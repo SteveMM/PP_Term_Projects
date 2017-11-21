@@ -173,7 +173,7 @@ int main(int argc, char *argv[])
         for (long long int i = 0; i < num_values; i++) {
           if ((TESTBIT(unique_bit_map, i) ^ TESTBIT(incoming_bit_map, i)) && !TESTBIT(visited_bit_map, i)) {
             SETBIT(unique_bit_map, i);
-            SETBIT(visited_bit_map, i)
+            SETBIT(visited_bit_map, i);
           }
         }
         
