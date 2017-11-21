@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 
   long long int product = 0;
 
-  printf("\nproducts: ");
+  printf("products: ");
   while (my_chunk > 0) 
   {
     // data_array[index++] = i * j;
@@ -139,6 +139,7 @@ int main(int argc, char *argv[])
       j++; i = j;
     }
   }
+  printf("\n");
 
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
