@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  printf("\n");
+  // printf("\n");
 
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
@@ -137,18 +137,18 @@ int main(int argc, char *argv[])
             // printf("...set.");
             SETBIT(unique_bit_map, i);
           }
-          printf("\n");
+          // printf("\n");
         }
-        printf("\n");
+        // printf("\n");
     }
         // printf("\nunique: ");
         for (long long int i = 0; i <= num_values; i++) {
           if (TESTBIT(unique_bit_map, i)) {
-            printf("%lli ", i);
+            // printf("%lli ", i);
             counter++;
           }
         }
-      // printf("counter: %lli\n" counter);
+      printf("counter: %lli\n" counter);
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
