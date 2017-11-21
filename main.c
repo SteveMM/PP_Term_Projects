@@ -181,7 +181,9 @@ int main(int argc, char *argv[])
         // }
 
         for (long long int i = 0; i < num_values; i++) {
-          if (TESTBIT(unique_bit_map, i))
+          if (TESTBIT(unique_bit_map, i)) {
+            counter++;
+          }
         }
         // free(next_proc_array);
     }
