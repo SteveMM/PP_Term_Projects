@@ -107,6 +107,7 @@ int main(int argc, char *argv[])
   long long index = 0;
 
   const int n = ceil(num_values / sizeof(int));
+  printf("n: %i\n", n);
   int unique_bit_map[n];
   int visited_bit_map[n];
 
