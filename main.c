@@ -13,6 +13,18 @@
 #define LENGTH(a) (sizeof(a) / sizeof((a)[0]))
 #endif
 
+#ifndef SETBIT
+#define SETBIT(A,k) (A[(k/32)] |= (1 << (k%32)))
+#endif
+
+#ifndef CLEARBIT
+#define CLEARBIT(A,k) (A[(k/32)] &= ~(1 << (k%32))) 
+#endif
+
+#ifndef TESTBIT
+#define TESTBIT(A,k) (A[(k/32)] & (1 << (k%32)))
+#endif
+
 // Constants
 static const int ROOT = 0;
 
@@ -117,15 +129,24 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
-    int *hash_map = (int*) calloc(table_size * table_size, sizeof(int));
+    const int n = table_size * table_size
+    int bit_map[n];
+
+    for (int i = 0; i < n; i++)
+      bit_map[i] = 0; 
+
+    // int *hash_map = (int*) calloc(table_size * table_size, sizeof(int));
     // printf("rank %i chunk: %lli -> ", process_rank, chunk_sizes[0]);
-    for (long long i = 0; i < chunk_sizes[0]; i++) {
+    for (int i = 0; i < chunk_sizes[0]; i++) {
       // printf("%lli ", data_array[i]);
-      counter++;
-      hash_map[data_array[i]]++;
-      if (hash_map[data_array[i]] == 2) {
-        counter--;
+      if (!(TESTBIT(bit_map, i))) {
+        counter++;
+        SETBIT(bit_map, i);
       }
+      // hash_map[data_array[i]]++;
+      // if (hash_map[data_array[i]] == 2) {
+      //   counter--;
+      // }
     }
     // printf("counter: %lli", counter);
     // printf("\n");
@@ -140,11 +161,15 @@ int main(int argc, char *argv[])
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
         for (long long i = 0; i < next_array_chunk_size; i++) {
-          counter++;
-          hash_map[next_proc_array[i]]++;
-          if (hash_map[next_proc_array[i]] == 2) {
-            counter--;
+          if (!(TESTBIT(bit_map, i))) {
+            counter++;
+            SETBIT(bit_map, i);
           }
+          // counter++;
+          // hash_map[next_proc_array[i]]++;
+          // if (hash_map[next_proc_array[i]] == 2) {
+          //   counter--;
+          // }
           // printf("%lli ", next_proc_array[i]);
         }
         // printf("counter: %lli", counter);
