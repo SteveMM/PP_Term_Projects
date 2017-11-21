@@ -109,10 +109,8 @@ int main(int argc, char *argv[])
   while (my_chunk > 0) 
   {
     product = i * j;
-    if (!TESTBIT(visited_bit_map, product)) {
-      SETBIT(unique_bit_map, product);
-      printf("set %lli ", product);
-    }
+    SETBIT(unique_bit_map, product);
+    printf("set %lli ", product);
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
