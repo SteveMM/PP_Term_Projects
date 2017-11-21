@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
     if (!TESTBIT(visited_bit_map, product)) {
       SETBIT(unique_bit_map, product);
       SETBIT(visited_bit_map, product);
-      printf("set %lli (%u)", product, unique_bit_map[i] & 0x01);
+      printf("set %lli (%u)", product, TESTBIT(unique_bit_map, product));
     } else {
       CLEARBIT(unique_bit_map, product);
       printf("clear %lli ", product);
