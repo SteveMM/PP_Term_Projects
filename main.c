@@ -22,7 +22,6 @@
 #endif
 
 #ifndef TESTBIT
-
 #define TESTBIT(A,k) ( A[(k/32)] & (1 << (k%32)) )  
 #endif
 
@@ -58,7 +57,7 @@ int main(int argc, char *argv[])
   
   // Define problem paramaters
   long table_size = atol(argv[1]);
-  long long int num_values = table_size * table_size;
+  unsigned long long int num_values = table_size * table_size;
   const int cells = ((num_values / 2) + ceil((float) table_size / 2));
 
   // Calculate each processors chunk, the 
@@ -122,11 +121,11 @@ int main(int argc, char *argv[])
   if (process_rank != ROOT)
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
 
-  if (process_rank == ROOT) 
-  { 
+  if (process_rank == ROOT) { 
+
     int *incoming_bit_map = (int*) malloc(n * sizeof(int));
-    for (int rank = 1; rank < num_processors; ++rank) 
-    {
+
+    for (int rank = 1; rank < num_processors; ++rank) {
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
         for (long long int i = 0; i <= num_values; i++) {
