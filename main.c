@@ -100,12 +100,9 @@ int main(int argc, char *argv[])
 
   const int n = ceil(num_values / sizeof(int));
   int unique_bit_map[n];
-  int visited_bit_map[n];
 
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++)
     unique_bit_map[i] = 0;
-    visited_bit_map[i] = 0;
-  }
 
   long long int product = 0;
   printf("\nproducts: ");
@@ -114,11 +111,7 @@ int main(int argc, char *argv[])
     product = i * j;
     if (!TESTBIT(visited_bit_map, product)) {
       SETBIT(unique_bit_map, product);
-      SETBIT(visited_bit_map, product);
       printf("set %lli ", product);
-    } else {
-      CLEARBIT(unique_bit_map, product);
-      printf("clear %lli ", product);
     }
     i++; my_chunk--;
     if (i == (table_size + offset)) 
