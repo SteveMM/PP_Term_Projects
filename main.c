@@ -126,6 +126,7 @@ int main(int argc, char *argv[])
 
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
+    printf("n: ", n);
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
 
   if (process_rank == ROOT) 
