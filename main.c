@@ -101,6 +101,8 @@ int main(int argc, char *argv[])
   for (int i = 0; i < n; i++)
     unique_bit_map[i] = 0;
 
+  printf("Made it here\n");
+
   long long int product = 0;
   // printf("\nproducts: ");
   while (my_chunk > 0) 
