@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
   printf("n: %li\n", n);
   int *unique_bit_map = (int*) malloc(n * sizeof(int));
 
-  for (int i = 0; i < n; i++)
+  for (long long i = 0; i < n; i++)
     unique_bit_map[i] = 0;
 
   long long int product = 0;
