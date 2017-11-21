@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
   }
 
   printf("chunk sizes: %llu\n", chunk_sizes[process_rank]);
-  long *data_array = (long *)malloc(sizeof(long) * chunk_sizes[process_rank]);
+  long long *data_array = (long long *)malloc(sizeof(long long) * chunk_sizes[process_rank]);
 
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
   if (process_rank != ROOT)
   {
     MPI_Send(&chunk_sizes[process_rank], 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
-    MPI_Send(data_array, chunk_sizes[process_rank], MPI_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
+    MPI_Send(data_array, chunk_sizes[process_rank], MPI_LONG_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
   }
 
   if (process_rank == ROOT) 
