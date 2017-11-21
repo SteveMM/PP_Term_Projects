@@ -14,15 +14,16 @@
 #endif
 
 #ifndef SETBIT
-#define SETBIT(A,k) (A[(k/32)] |= (1 << (k%32)))
+#define SETBIT(A,k) ( A[(k/32)] |= (1 << (k%32)) )
 #endif
 
 #ifndef CLEARBIT
-#define CLEARBIT(A,k) (A[(k/32)] &= ~(1 << (k%32))) 
+#define CLEARBIT(A,k) ( A[(k/32)] &= ~(1 << (k%32)) ) 
 #endif
 
 #ifndef TESTBIT
-#define TESTBIT(A,k) (A[(k/32)] & (1 << (k%32)))
+
+#define TESTBIT(A,k) ( A[(k/32)] & (1 << (k%32)) )  
 #endif
 
 // Constants
@@ -112,10 +113,8 @@ int main(int argc, char *argv[])
   {
     product = i * j;
     if (!TESTBIT(visited_bit_map, product)) {
-      unique_bit_map[product] = 1;
-      visited_bit_map[product] = 0;
-      // SETBIT(unique_bit_map, product);
-      // SETBIT(visited_bit_map, product);
+      SETBIT(unique_bit_map, product);
+      SETBIT(visited_bit_map, product);
       printf("set %lli ", product);
     } else {
       CLEARBIT(unique_bit_map, product);
