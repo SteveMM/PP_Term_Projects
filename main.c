@@ -107,7 +107,6 @@ int main(int argc, char *argv[])
   long long index = 0;
 
   const int n = ceil(num_values / sizeof(int));
-  printf("n: %i\n", n);
   int unique_bit_map[n];
   int visited_bit_map[n];
 
@@ -171,7 +170,7 @@ int main(int argc, char *argv[])
         int incoming_bit_map[n];
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
-        for (long long int i = 0; i < num_values; i++) {
+        for (int i = 0; i < num_values; i++) {
           if ((TESTBIT(unique_bit_map, i) ^ TESTBIT(incoming_bit_map, i)) && !TESTBIT(visited_bit_map, i)) {
             SETBIT(unique_bit_map, i);
             SETBIT(visited_bit_map, i);
