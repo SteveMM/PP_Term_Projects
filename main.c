@@ -135,24 +135,6 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
-    int final_bit_map[n];
-    for (int i = 0; i < n; i++) {
-      visited_bit_map[i] = 0;
-      final_bit_map[i] = 0;
-    }
-
-    for (int i = 0; i <= num_values; i++) {
-      printf("looking at: %i", i);
-      if ((TESTBIT(final_bit_map, i) ^ TESTBIT(unique_bit_map, i)) && !(TESTBIT(visited_bit_map, i))) {
-        printf("...set.");
-        SETBIT(final_bit_map, i);
-        SETBIT(visited_bit_map, i);
-      }
-      printf("\n");
-    }
-
-    printf("\n");
-
     for (int rank = 1; rank < num_processors; ++rank) 
     {
         int incoming_bit_map[n];
@@ -161,10 +143,8 @@ int main(int argc, char *argv[])
         for (int i = 0; i <= num_values; i++) {
           printf("looking at: %i", i);
           if (TESTBIT(incoming_bit_map, i)) {
-              printf("...set.");
-              SETBIT(final_bit_map, i);
-              SETBIT(visited_bit_map, i);
-            }
+            printf("...set.");
+            SETBIT(unique_bit_map, i);
           }
           printf("\n");
         }
@@ -172,7 +152,7 @@ int main(int argc, char *argv[])
     }
         printf("\nunique: ");
         for (long long int i = 0; i <= num_values; i++) {
-          if (TESTBIT(final_bit_map, i)) {
+          if (TESTBIT(unique_bit_map, i)) {
             printf("%lli ", i);
             counter++;
           }
