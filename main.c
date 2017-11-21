@@ -76,7 +76,6 @@ int main(int argc, char *argv[])
   const int offset = 1;
   const int start = 1;
   long long my_chunk = chunk_sizes[process_rank];
-  
   long long end = 0LL;
   
   for (int i = 0; i < process_rank; ++i)
@@ -96,8 +95,6 @@ int main(int argc, char *argv[])
   }
 
   my_chunk = chunk_sizes[process_rank];
-  long long index = 0;
-
   const int n = ceil(num_values / sizeof(int));
   int unique_bit_map[n];
 
@@ -119,7 +116,7 @@ int main(int argc, char *argv[])
   }
 
   // printf("\n");
-
+  printf("Made it here\n");
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
