@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
-  unsigned long long my_chunk = chunk_sizes[process_rank];
+  long long my_chunk = chunk_sizes[process_rank];
   
   long long end = 0LL;
   
