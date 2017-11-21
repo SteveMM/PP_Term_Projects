@@ -91,9 +91,8 @@ int main(int argc, char *argv[])
      end += chunk_sizes[i];
   }
   
-  //long long end = process_rank * my_chunk;
-  long long i = start;
-  long long j = start;
+  unsigned long long i = start;
+  unsigned long long j = start;
   while (end > 0)
   {
       end--; my_chunk--; i++;
@@ -104,12 +103,10 @@ int main(int argc, char *argv[])
   }
 
   my_chunk = chunk_sizes[process_rank];
-  long product;
   long long index = 0;
   while (my_chunk > 0) 
   {
     data_array[index++] = i * j;
-    //printf("Product: %lli\n", i * j);
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
