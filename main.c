@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
   my_chunk = chunk_sizes[process_rank];
   const long n = ceil(num_values / sizeof(int));
   printf("n: %li", n);
-  int *unique_bit_map = (int*) malloc(n);
+  int *unique_bit_map = (int*) malloc(n * sizeof(int));
 
   for (int i = 0; i < n; i++)
     unique_bit_map[i] = 0;
@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
-    int *incoming_bit_map = (int*) malloc(n);
+    int *incoming_bit_map = (int*) malloc(n * sizeof(int));
     for (int rank = 1; rank < num_processors; ++rank) 
     {
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
