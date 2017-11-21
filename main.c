@@ -72,8 +72,6 @@ int main(int argc, char *argv[])
         chunk_sizes[i] += 1;
   }
 
-  printf("Made it here\n");
-
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
@@ -95,6 +93,8 @@ int main(int argc, char *argv[])
           j++; i = j;
       }
   }
+
+  printf("Made it here\n");
 
   my_chunk = chunk_sizes[process_rank];
   const int n = ceil(num_values / sizeof(int));
