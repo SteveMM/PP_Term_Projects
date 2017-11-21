@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
       SETBIT(unique_bit_map, product);
       SETBIT(visited_bit_map, product);
     } else {
-      unique_bit_map[i] = 0;
+      CLEARBIT(unique_bit_map, product);
     }
     i++; my_chunk--;
     if (i == (table_size + offset)) 
@@ -168,25 +168,9 @@ int main(int argc, char *argv[])
         int incoming_bit_map[n];
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
-        printf("a: ");
         for (long long int i = 0; i < num_values; i++) {
-          printf("%i", unique_bit_map[i] & 0x01);
-        }
-        printf("\n");
-
-        printf("b: ");
-        for (long long int i = 0; i < num_values; i++) {
-          printf("%i", incoming_bit_map[i] & 0x01);
           unique_bit_map[i] = unique_bit_map[i] ^ incoming_bit_map[i];
         }
-        printf("\n");
-
-        printf("c: ");
-        for (long long int i = 0; i < num_values; i++) {
-          printf("%i", unique_bit_map[i] & 0x01);
-        }
-        printf("\n");
-        
         
         // for (long long i = 0; i < next_array_chunk_size; i++) {
         //   if (!(TESTBIT(bit_map, next_proc_array[i]))) {
