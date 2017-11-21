@@ -98,6 +98,8 @@ int main(int argc, char *argv[])
   const int n = ceil(num_values / sizeof(int));
   int unique_bit_map[n];
 
+  printf("Made it here\n");
+
   for (int i = 0; i < n; i++)
     unique_bit_map[i] = 0;
 
