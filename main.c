@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
     }
         for (long long int i = 0; i < num_values; i++) {
           if (TESTBIT(final_bit_map, i)) {
-            printf("%lli", i);
+            printf("%lli ", i);
             counter++;
           }
         }
