@@ -147,6 +147,17 @@ int main(int argc, char *argv[])
     for (int i = 0; i < n; i++) {
       visited_bit_map[i] = 0;
     }
+
+    int final_bit_map[n];
+
+    for (int i = 0; i < num_values; i++) {
+      if ((TESTBIT(final_bit_map, i) ^ TESTBIT(unique_bit_map, i)) && !TESTBIT(visited_bit_map, i)) {
+        SETBIT(final_bit_map, i);
+        SETBIT(visited_bit_map, i);
+      }
+    }
+
+
     // const int n = table_size * table_size;
     // int bit_map[n];
 
@@ -171,11 +182,9 @@ int main(int argc, char *argv[])
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
         for (int i = 0; i < num_values; i++) {
-          if ((TESTBIT(unique_bit_map, i) ^ TESTBIT(incoming_bit_map, i)) && !TESTBIT(visited_bit_map, i)) {
-            SETBIT(unique_bit_map, i);
+          if ((TESTBIT(final_bit_map, i) ^ TESTBIT(incoming_bit_map, i)) && !TESTBIT(visited_bit_map, i)) {
+            SETBIT(final_bit_map, i);
             SETBIT(visited_bit_map, i);
-          } else {
-            CLEARBIT(unique_bit_map, i);
           }
         }
         
@@ -189,7 +198,7 @@ int main(int argc, char *argv[])
         // free(next_proc_array);
     }
         for (long long int i = 0; i < num_values; i++) {
-          if (TESTBIT(unique_bit_map, i)) {
+          if (TESTBIT(final_bit_map, i)) {
             counter++;
           }
         }
