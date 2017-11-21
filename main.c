@@ -36,11 +36,6 @@ static const int TAG_BIT_MAP = 1;
 // Global Counter
 static long long counter = 0LL;
 
-typedef struct {
-  long num;
-  int count;
-} hash_entry;
-
 int main(int argc, char *argv[])
 {   
   int process_rank;
@@ -76,8 +71,6 @@ int main(int argc, char *argv[])
         chunk_sizes[i] += 1;
   }
 
-  long long *data_array = (long long *)malloc(sizeof(long long) * chunk_sizes[process_rank]);
-
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
@@ -104,7 +97,7 @@ int main(int argc, char *argv[])
   my_chunk = chunk_sizes[process_rank];
   long long index = 0;
 
-  const int n = ceil(num_values / sizeof(int));
+  const int n = ceil(num_values / sizeof(int)) + 1;
   int unique_bit_map[n];
   int visited_bit_map[n];
 
@@ -114,16 +107,14 @@ int main(int argc, char *argv[])
   }
 
   long long int product = 0;
-
   printf("\nproducts: ");
   while (my_chunk > 0) 
   {
     product = i * j;
-    
     if (!TESTBIT(visited_bit_map, product)) {
       SETBIT(unique_bit_map, product);
       SETBIT(visited_bit_map, product);
-      printf("set %lli (%u)", product, !TESTBIT(unique_bit_map, product) & 0x01);
+      printf("set %lli ", product);
     } else {
       CLEARBIT(unique_bit_map, product);
       printf("clear %lli ", product);
