@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 
   long long int product = 0;
 
-  printf("products: ");
+  printf("\nproducts: ");
   while (my_chunk > 0) 
   {
     // data_array[index++] = i * j;
@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
 
         // free(next_proc_array);
     }
-        printf("unique: ");
+        printf("\nunique: ");
         for (long long int i = 0; i < num_values; i++) {
           if (TESTBIT(final_bit_map, i)) {
             printf("%lli ", i);
