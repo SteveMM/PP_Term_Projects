@@ -31,6 +31,7 @@ static const int ROOT = 0;
 // Send/Recv Tags
 static const int TAG_CHUNK_SIZE = 0;
 static const int TAG_MATRIX_CHUNK_DATA = 1;
+static const int TAG_BIT_MAP = 1;
 
 // Global Counter
 static long long counter = 0LL;
@@ -61,7 +62,8 @@ int main(int argc, char *argv[])
   
   // Define problem paramaters
   long table_size = atol(argv[1]);
-  const int cells = ((( table_size * table_size) / 2) + ceil((float) table_size / 2));
+  long long int num_values = table_size * table_size;
+  const int cells = ((num_values / 2) + ceil((float) table_size / 2));
 
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
@@ -104,9 +106,28 @@ int main(int argc, char *argv[])
 
   my_chunk = chunk_sizes[process_rank];
   long long index = 0;
+
+  const int n = ceil(num_values / sizeof(int));
+  int unique_bit_map[n];
+  int visited_bit_map[n];
+
+  for (int i = 0; i < n; i++) {
+    unique_bit_map[i] = 0;
+    visited_bit_map[i] = 0;
+  }
+
+  long long int product = 0;
+
   while (my_chunk > 0) 
   {
-    data_array[index++] = i * j;
+    // data_array[index++] = i * j;
+    product = i * j;
+    if (!TESTBIT(visited_bit_map, product)) {
+      SETBIT(unique_bit_map, product);
+      SETBIT(visited_bit_map, product);
+    } else {
+      CLEARBIT(unique_bit_map, product);
+    }
     i++; my_chunk--;
     if (i == (table_size + offset)) 
     {
@@ -117,38 +138,47 @@ int main(int argc, char *argv[])
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
   {
-    MPI_Send(&chunk_sizes[process_rank], 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
-    MPI_Send(data_array, chunk_sizes[process_rank], MPI_LONG_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
+    // MPI_Send(&chunk_sizes[process_rank], 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
+    // MPI_Send(data_array, chunk_sizes[process_rank], MPI_LONG_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
+    MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
   }
 
   if (process_rank == ROOT) 
   { 
-    const int n = table_size * table_size;
-    int bit_map[n];
+    // const int n = table_size * table_size;
+    // int bit_map[n];
 
-    for (int i = 0; i < n; i++)
-      bit_map[i] = 0; 
+    // for (int i = 0; i < n; i++)
+    //   bit_map[i] = 0; 
 
-    for (int i = 0; i < chunk_sizes[0]; i++) {
-      if (!(TESTBIT(bit_map, data_array[i]))) {
-        counter++;
-        SETBIT(bit_map, data_array[i]);
-      }
-    }
+    // for (int i = 0; i < chunk_sizes[0]; i++) {
+    //   if (!(TESTBIT(bit_map, data_array[i]))) {
+    //     counter++;
+    //     SETBIT(bit_map, data_array[i]);
+    //   }
+    // }
 
     for (int rank = 1; rank < num_processors; ++rank) 
     {
-        long long next_array_chunk_size;
-        MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);  
+        // long long next_array_chunk_size;
+        // MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);  
       
-        long *next_proc_array = (long *) malloc(next_array_chunk_size * sizeof(long));
-        MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
+        // long *next_proc_array = (long *) malloc(next_array_chunk_size * sizeof(long));
+        // MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
+        int incoming_bit_map[n];
+        MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
+
+        unique_bit_map = unique_bit_map ^ incoming_bit_map;
         
-        for (long long i = 0; i < next_array_chunk_size; i++) {
-          if (!(TESTBIT(bit_map, next_proc_array[i]))) {
-            counter++;
-            SETBIT(bit_map, next_proc_array[i]);
-          }
+        // for (long long i = 0; i < next_array_chunk_size; i++) {
+        //   if (!(TESTBIT(bit_map, next_proc_array[i]))) {
+        //     counter++;
+        //     SETBIT(bit_map, next_proc_array[i]);
+        //   }
+        // }
+
+        for (long long int i = 0; i < values; i++) {
+          if (TESTBIT(unique_bit_map, i))
         }
         free(next_proc_array);
     }
