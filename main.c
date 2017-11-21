@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) 
   { 
-    const int n = table_size * table_size
+    const int n = table_size * table_size;
     int bit_map[n];
 
     for (int i = 0; i < n; i++)
