@@ -94,14 +94,10 @@ int main(int argc, char *argv[])
       }
   }
 
-  
-
   my_chunk = chunk_sizes[process_rank];
-  printf("Made it here 1\n");
   const int n = ceil(num_values / sizeof(int));
-  printf("Made it here 2\n");
+  printf("n: %i", n);
   int *unique_bit_map = (int*) malloc(n);
-  printf("Made it here 3\n");
 
   for (int i = 0; i < n; i++)
     unique_bit_map[i] = 0;
@@ -120,13 +116,10 @@ int main(int argc, char *argv[])
     }
   }
 
-  printf("Made it here\n");
-
   // printf("\n");
 
   MPI_Barrier(MPI_COMM_WORLD);
   if (process_rank != ROOT)
-    printf("n: %i", n);
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
 
   if (process_rank == ROOT) 
