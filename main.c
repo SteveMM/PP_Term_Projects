@@ -168,9 +168,22 @@ int main(int argc, char *argv[])
         int incoming_bit_map[n];
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
+        printf("a: ");
+        for (long long int i = 0; i < num_values; i++) {
+          printf("%i", unique_bit_map[i] & 0x01);
+        }
+        printf("\n");
+
+        printf("b: ");
         for (long long int i = 0; i < num_values; i++) {
           printf("%i", incoming_bit_map[i] & 0x01);
           unique_bit_map[i] = unique_bit_map[i] ^ incoming_bit_map[i];
+        }
+        printf("\n");
+
+        printf("c: ");
+        for (long long int i = 0; i < num_values; i++) {
+          printf("%i", unique_bit_map[i] & 0x01);
         }
         printf("\n");
         
