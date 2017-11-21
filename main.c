@@ -122,10 +122,7 @@ int main(int argc, char *argv[])
   {
     MPI_Send(&chunk_sizes[process_rank], 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD);
     MPI_Send(data_array, chunk_sizes[process_rank], MPI_LONG, ROOT, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD);
-  } // else
-  // {
-  //   MPI_Isend(&chunk, 1, MPI_LONG_LONG, ROOT, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);
-  // }
+  }
 
   if (process_rank == ROOT) 
   { 
@@ -135,27 +132,17 @@ int main(int argc, char *argv[])
     for (int i = 0; i < n; i++)
       bit_map[i] = 0; 
 
-    // int *hash_map = (int*) calloc(table_size * table_size, sizeof(int));
-    // printf("rank %i chunk: %lli -> ", process_rank, chunk_sizes[0]);
     for (int i = 0; i < chunk_sizes[0]; i++) {
-      // printf("%lli ", data_array[i]);
       if (!(TESTBIT(bit_map, data_array[i]))) {
         counter++;
         SETBIT(bit_map, data_array[i]);
       }
-      // hash_map[data_array[i]]++;
-      // if (hash_map[data_array[i]] == 2) {
-      //   counter--;
-      // }
     }
-    printf("counter: %lli", counter);
-    // printf("\n");
+    
     for (int rank = 1; rank < num_processors; ++rank) 
     {
         long long next_array_chunk_size;
         MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);  
-      
-        // printf("rank %i chunk: %lli -> ", rank, next_array_chunk_size);
       
         long *next_proc_array = (long *) malloc(next_array_chunk_size * sizeof(long));
         MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
@@ -165,15 +152,7 @@ int main(int argc, char *argv[])
             counter++;
             SETBIT(bit_map, next_proc_array[i]);
           }
-          // counter++;
-          // hash_map[next_proc_array[i]]++;
-          // if (hash_map[next_proc_array[i]] == 2) {
-          //   counter--;
-          // }
-          // printf("%lli ", next_proc_array[i]);
         }
-        printf("counter: %lli", counter);
-        printf("\n");
         free(next_proc_array);
     }
       printf("counter: %lli\n", counter);
