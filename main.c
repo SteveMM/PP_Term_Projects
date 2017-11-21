@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
   const unsigned long long n = ceil(num_values / sizeof(int));
   // printf("n: %llu\n", n);
   // printf("malloc: %llu\n", n * sizeof(int));
-  int *unique_bit_map = (int*) calloc(n, sizeof(int));
+  int *unique_bit_map = (int*) calloc(n-5, sizeof(int));
 
   for (unsigned long long i = 0; i < n; i++)
     unique_bit_map[i] = 0;
@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
 
   if (process_rank == ROOT) { 
 
-    int *incoming_bit_map = (int*) calloc(n, sizeof(int));
+    int *incoming_bit_map = (int*) calloc(n-5, sizeof(int));
 
     for (int rank = 1; rank < num_processors; ++rank) {
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
