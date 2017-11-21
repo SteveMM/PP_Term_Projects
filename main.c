@@ -121,6 +121,7 @@ int main(int argc, char *argv[])
   {
     // data_array[index++] = i * j;
     product = i * j;
+    printf("%lli ", product);
     if (!TESTBIT(visited_bit_map, product)) {
       SETBIT(unique_bit_map, product);
       SETBIT(visited_bit_map, product);
