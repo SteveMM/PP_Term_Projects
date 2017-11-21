@@ -200,6 +200,7 @@ int main(int argc, char *argv[])
 
         // free(next_proc_array);
     }
+        printf("unique: ");
         for (long long int i = 0; i < num_values; i++) {
           if (TESTBIT(final_bit_map, i)) {
             printf("%lli ", i);
