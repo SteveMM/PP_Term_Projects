@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
       //   counter--;
       // }
     }
-    // printf("counter: %lli", counter);
+    printf("counter: %lli", counter);
     // printf("\n");
     for (int rank = 1; rank < num_processors; ++rank) 
     {
@@ -172,8 +172,8 @@ int main(int argc, char *argv[])
           // }
           // printf("%lli ", next_proc_array[i]);
         }
-        // printf("counter: %lli", counter);
-        // printf("\n");
+        printf("counter: %lli", counter);
+        printf("\n");
         free(next_proc_array);
     }
       printf("counter: %lli\n", counter);
