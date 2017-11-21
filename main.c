@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
         MPI_Recv(&next_array_chunk_size, 1, MPI_LONG_LONG, rank, TAG_CHUNK_SIZE, MPI_COMM_WORLD, NULL);  
       
         long *next_proc_array = (long *) malloc(next_array_chunk_size * sizeof(long));
-        MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
+        MPI_Recv(next_proc_array, next_array_chunk_size, MPI_LONG_LONG, rank, TAG_MATRIX_CHUNK_DATA, MPI_COMM_WORLD, NULL);
         
         for (long long i = 0; i < next_array_chunk_size; i++) {
           if (!(TESTBIT(bit_map, next_proc_array[i]))) {
