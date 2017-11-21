@@ -49,7 +49,8 @@ int main(int argc, char *argv[])
   if (argc < 2)
   {
     if (process_rank == ROOT)
-      printf("ERROR: Missing table size. Usage: ./main [table size]\n");   
+      printf("ERROR: Missing table size. Usage: ./main [table size]\n");
+      
       // MPI clean-up
       MPI_Finalize();
       return 0;
@@ -62,24 +63,24 @@ int main(int argc, char *argv[])
 
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
-  unsigned long long chunk;
+  unsigned long long chunk_sizes[num_processors];
   for (int i = 0; i < num_processors; ++i)
   {
-      chunk = floor((float) cells / num_processors);
+      chunk_sizes[i] = floor((float) cells / num_processors);
     
       if (i < cells % num_processors)
-        chunk += 1;
+        chunk_sizes[i] += 1;
   }
 
   // Calculate all (i,j) indicies for each process to start at
   const int offset = 1;
   const int start = 1;
-  long long my_chunk = chunk;
+  long long my_chunk = chunk_sizes[process_rank];
   long long end = 0LL;
   
   for (int i = 0; i < process_rank; ++i)
   {
-     end += chunk;
+     end += chunk_sizes[i];
   }
   
   unsigned long long i = start;
@@ -93,7 +94,7 @@ int main(int argc, char *argv[])
       }
   }
 
-  my_chunk = chunk;
+  my_chunk = chunk_sizes[process_rank];
   const long long n = ceil(num_values / sizeof(int));
   printf("n: %li\n", n);
   int *unique_bit_map = (int*) malloc(n * sizeof(int));
