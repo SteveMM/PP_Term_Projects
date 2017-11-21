@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
             counter++;
           }
         }
-      printf("counter: %lli\n", counter);
+      printf("values: %lli, counter: %lli\n", num_values, counter);
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
