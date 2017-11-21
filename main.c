@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
       SETBIT(unique_bit_map, product);
       SETBIT(visited_bit_map, product);
     } else {
-      CLEARBIT(unique_bit_map, product);
+      unique_bit_map[i] = 0;
     }
     i++; my_chunk--;
     if (i == (table_size + offset)) 
