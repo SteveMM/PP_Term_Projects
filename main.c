@@ -44,12 +44,13 @@ int main(int argc, char *argv[])
       MPI_Finalize();
       return 0;
   }
-  
+  printf("Defining problem parameters\n");
   // Define problem paramaters
   long table_size = atol(argv[1]);
   const unsigned long long int num_values = table_size * table_size;
   const unsigned long long int cells = ((num_values / 2) + ceil((float) table_size / 2));
 
+printf("Determing chunk sizes\n");
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
   unsigned long long chunk_sizes[num_processors];
@@ -60,7 +61,7 @@ int main(int argc, char *argv[])
       if (i < cells % num_processors)
         chunk_sizes[i] += 1;
   }
-
+printf("Calculating data\n");
   // Define offset paramaters
   const int offset = 1;
   const int start = 1;
@@ -95,14 +96,14 @@ int main(int argc, char *argv[])
   // TESTING
   // printf("n: %llu\n", n);
   // printf("malloc: %llu\n", n * sizeof(int));
-
+printf("Creating bitmap\n");
   // Define a bitmap for each process
   int *unique_bit_map = (int*) malloc(n * sizeof(int));
 
   // Clear bitmap
   for (unsigned long long i = 0; i < n; ++i)
     unique_bit_map[i] = 0;
-
+printf("filling bitmap\n");
   // Set the bit corrisponding to each product as a unique product
   unsigned long long int product = 0; 
   while (my_chunk > 0) 
@@ -122,13 +123,13 @@ int main(int argc, char *argv[])
   // Barrier only for pretty test printing 
   // TODO: Remove barrier
   MPI_Barrier(MPI_COMM_WORLD);
-
+printf("Sending bitmaps\n");
   // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT)
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
 
   if (process_rank == ROOT) { 
-
+    printf("Collecting and counting\n");
     // Allocate space for each incoming bitmap
     int *incoming_bit_map = (int*) malloc(n * sizeof(int));
 
