@@ -80,10 +80,10 @@ int main(int argc, char *argv[])
   unsigned long long j = start;
   while (end > 0)
   {
-      end--; my_chunk--; i++;
+      --end; --my_chunk; ++i;
       if (i == (table_size + offset)) 
       {
-          j++; i = j;
+          ++j; i = j;
       }
   }
 
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
   int *unique_bit_map = (int*) malloc(n * sizeof(int));
 
   // Clear bitmap
-  for (unsigned long long i = 0; i < n; i++)
+  for (unsigned long long i = 0; i < n; ++i)
     unique_bit_map[i] = 0;
 
   // Set the bit corrisponding to each product as a unique product
@@ -110,10 +110,10 @@ int main(int argc, char *argv[])
     product = i * j;
     SETBIT(unique_bit_map, product);
     // printf("set %lli ", product);
-    i++; my_chunk--;
+    ++i; --my_chunk;
     if (i == (table_size + offset)) 
     {
-      j++; i = j;
+      ++j; i = j;
     }
   }
 
@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
 
         // If an incoming bitmap contains a unique product that is not yet in
         // the roots unique bitmap, set that bit as unique
-        for (unsigned long long int i = 0; i <= num_values; i++) {
+        for (unsigned long long int i = 0; i <= num_values; ++i) {
           // printf("looking at: %i", i);
           if (TESTBIT(incoming_bit_map, i)) {
             // printf("...set.");
@@ -151,10 +151,10 @@ int main(int argc, char *argv[])
     }
         // printf("\nunique: ");
         // Increment the counter for every bit set in the unique bitmap
-        for (unsigned long long int i = 0; i <= num_values; i++) {
+        for (unsigned long long int i = 0; i <= num_values; ++i) {
           if (TESTBIT(unique_bit_map, i)) {
             // printf("%lli ", i);
-            counter++;
+            ++counter;
           }
         }
 
