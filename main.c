@@ -5,20 +5,8 @@
 #include <math.h>
 
 // Macro definition(s)
-#ifndef MIN
-#define MIN(a,b) (((a) < (b)) ? (a) : (b))
-#endif
-
-#ifndef LENGTH
-#define LENGTH(a) (sizeof(a) / sizeof((a)[0]))
-#endif
-
 #ifndef SETBIT
 #define SETBIT(A,k) ( A[(k/32)] |= (1 << (k%32)) )
-#endif
-
-#ifndef CLEARBIT
-#define CLEARBIT(A,k) ( A[(k/32)] &= ~(1 << (k%32)) ) 
 #endif
 
 #ifndef TESTBIT
@@ -41,10 +29,12 @@ int main(int argc, char *argv[])
   int process_rank;
   int num_processors;
 
+  // Initialize MPI
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &process_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &num_processors);
 
+  // Check for command line input
   if (argc < 2)
   {
     if (process_rank == ROOT)
@@ -71,17 +61,21 @@ int main(int argc, char *argv[])
         chunk_sizes[i] += 1;
   }
 
-  // Calculate all (i,j) indicies for each process to start at
+  // Define offset paramaters
   const int offset = 1;
   const int start = 1;
+
+  // Initialize each processors chunk
   unsigned long long my_chunk = chunk_sizes[process_rank];
   unsigned long long end = 0LL;
   
+  // Determine the ending position for each process
   for (int i = 0; i < process_rank; ++i)
   {
      end += chunk_sizes[i];
   }
   
+  // "Fast-forward" each processor to their start location
   unsigned long long i = start;
   unsigned long long j = start;
   while (end > 0)
@@ -93,17 +87,24 @@ int main(int argc, char *argv[])
       }
   }
 
+  // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
+
   const unsigned long long n = ceil(num_values / sizeof(int));
+
+  // TESTING
   // printf("n: %llu\n", n);
   // printf("malloc: %llu\n", n * sizeof(int));
+
+  // Define a bitmap for each process
   int *unique_bit_map = (int*) malloc(n * sizeof(int));
 
+  // Clear bitmap
   for (unsigned long long i = 0; i < n; i++)
     unique_bit_map[i] = 0;
 
-  unsigned long long int product = 0;
-  // printf("\nproducts: ");
+  // Set the bit corrisponding to each product as a unique product
+  unsigned long long int product = 0; 
   while (my_chunk > 0) 
   {
     product = i * j;
@@ -118,17 +119,26 @@ int main(int argc, char *argv[])
 
   // printf("\n");
 
+  // Barrier only for pretty test printing 
+  // TODO: Remove barrier
   MPI_Barrier(MPI_COMM_WORLD);
+
+  // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT)
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
 
   if (process_rank == ROOT) { 
 
+    // Allocate space for each incoming bitmap
     int *incoming_bit_map = (int*) malloc(n * sizeof(int));
 
     for (int rank = 1; rank < num_processors; ++rank) {
+
+        // Get each unique bitmap from each process to compare against root bitmap
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
+        // If an incoming bitmap contains a unique product that is not yet in
+        // the roots unique bitmap, set that bit as unique
         for (unsigned long long int i = 0; i <= num_values; i++) {
           // printf("looking at: %i", i);
           if (TESTBIT(incoming_bit_map, i)) {
@@ -140,18 +150,23 @@ int main(int argc, char *argv[])
         // printf("\n");
     }
         // printf("\nunique: ");
+        // Increment the counter for every bit set in the unique bitmap
         for (unsigned long long int i = 0; i <= num_values; i++) {
           if (TESTBIT(unique_bit_map, i)) {
             // printf("%lli ", i);
             counter++;
           }
         }
+
+      // Print the total count
       printf("counter: %llu\n", counter);
+      // Free the incoming bitmap space
       free(incoming_bit_map);
   }
 
-  MPI_Barrier(MPI_COMM_WORLD);
+  // Free the unique bitmap of each process
   free(unique_bit_map);
+  // Finalize MPI
   MPI_Finalize();
   return 0;
 }
