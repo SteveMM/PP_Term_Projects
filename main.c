@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 
   // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
-  printf("Calculating bitmap size")
+  printf("Calculating bitmap size");
   const unsigned long long n = ceil(num_values / sizeof(unsigned long long));
 
   // TESTING
@@ -98,11 +98,11 @@ int main(int argc, char *argv[])
   printf("Creating bitmap\n");
   // Define a bitmap for each process
   unsigned long long *unique_bit_map = (unsigned long long*) malloc(n * sizeof(unsigned long long));
-
+printf("Clearing bitmap\n");
   // Clear bitmap
   for (unsigned long long i = 0LL; i < n; ++i)
     unique_bit_map[i] = 0LL;
-
+printf("Filling bitmap\n");
   // Set the bit corrisponding to each product as a unique product
   unsigned long long int product = 0LL; 
   while (my_chunk > 0LL) 
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
   // Barrier only for pretty test printing 
   // TODO: Remove barrier
   MPI_Barrier(MPI_COMM_WORLD);
-
+printf("Sending bitmaps\n");
   // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT)
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
