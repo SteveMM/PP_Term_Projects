@@ -44,13 +44,12 @@ int main(int argc, char *argv[])
       MPI_Finalize();
       return 0;
   }
-  printf("Defining problem parameters\n");
+  
   // Define problem paramaters
   long table_size = atol(argv[1]);
   const unsigned long long int num_values = table_size * table_size;
   const unsigned long long int cells = ((num_values / 2) + ceil((float) table_size / 2));
 
-printf("Determing chunk sizes\n");
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
   unsigned long long chunk_sizes[num_processors];
@@ -61,7 +60,7 @@ printf("Determing chunk sizes\n");
       if (i < cells % num_processors)
         chunk_sizes[i] += 1;
   }
-printf("Calculating data\n");
+
   // Define offset paramaters
   const int offset = 1;
   const int start = 1;
@@ -90,23 +89,23 @@ printf("Calculating data\n");
 
   // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
-
-  const unsigned long long n = ceil(num_values / sizeof(int));
+  printf("Calculating bitmap size")
+  const unsigned long long n = ceil(num_values / sizeof(unsigned long long));
 
   // TESTING
   // printf("n: %llu\n", n);
   // printf("malloc: %llu\n", n * sizeof(int));
-printf("Creating bitmap\n");
+  printf("Creating bitmap\n");
   // Define a bitmap for each process
-  int *unique_bit_map = (int*) malloc(n * sizeof(int));
+  unsigned long long *unique_bit_map = (unsigned long long*) malloc(n * sizeof(unsigned long long));
 
   // Clear bitmap
-  for (unsigned long long i = 0; i < n; ++i)
-    unique_bit_map[i] = 0;
-printf("filling bitmap\n");
+  for (unsigned long long i = 0LL; i < n; ++i)
+    unique_bit_map[i] = 0LL;
+
   // Set the bit corrisponding to each product as a unique product
-  unsigned long long int product = 0; 
-  while (my_chunk > 0) 
+  unsigned long long int product = 0LL; 
+  while (my_chunk > 0LL) 
   {
     product = i * j;
     SETBIT(unique_bit_map, product);
@@ -123,13 +122,13 @@ printf("filling bitmap\n");
   // Barrier only for pretty test printing 
   // TODO: Remove barrier
   MPI_Barrier(MPI_COMM_WORLD);
-printf("Sending bitmaps\n");
+
   // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT)
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
 
   if (process_rank == ROOT) { 
-    printf("Collecting and counting\n");
+
     // Allocate space for each incoming bitmap
     int *incoming_bit_map = (int*) malloc(n * sizeof(int));
 
@@ -140,7 +139,7 @@ printf("Sending bitmaps\n");
 
         // If an incoming bitmap contains a unique product that is not yet in
         // the roots unique bitmap, set that bit as unique
-        for (unsigned long long int i = 0; i <= num_values; ++i) {
+        for (unsigned long long int i = 0LL; i <= num_values; ++i) {
           // printf("looking at: %i", i);
           if (TESTBIT(incoming_bit_map, i)) {
             // printf("...set.");
@@ -152,7 +151,7 @@ printf("Sending bitmaps\n");
     }
         // printf("\nunique: ");
         // Increment the counter for every bit set in the unique bitmap
-        for (unsigned long long int i = 0; i <= num_values; ++i) {
+        for (unsigned long long int i = 0LL; i <= num_values; ++i) {
           if (TESTBIT(unique_bit_map, i)) {
             // printf("%lli ", i);
             ++counter;
