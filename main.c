@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
   my_chunk = chunk_sizes[process_rank];
   printf("Calculating bitmap size\n");
   const unsigned long long n = ceil(num_values / sizeof(unsigned long long));
-  printf("Bitmap size: %llu", n);
+  printf("Bitmap size: %llu\n", n);
 
   // TESTING
   // printf("n: %llu\n", n);
@@ -99,6 +99,8 @@ int main(int argc, char *argv[])
   printf("Creating bitmap\n");
   // Define a bitmap for each process
   unsigned int *unique_bit_map = (unsigned int*) calloc(n, sizeof(unsigned int));
+  if (unique_bit_map == NULL)
+      printf("FAILED TO CALLOC BITMAP\n");
 
   printf("Filling bitmap\n");
   // Set the bit corrisponding to each product as a unique product
