@@ -89,20 +89,18 @@ int main(int argc, char *argv[])
 
   // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
-  printf("Calculating bitmap size");
+  printf("Calculating bitmap size\n");
   const unsigned long long n = ceil(num_values / sizeof(unsigned long long));
+  printf("Bitmap size: %llu", n);
 
   // TESTING
   // printf("n: %llu\n", n);
   // printf("malloc: %llu\n", n * sizeof(int));
   printf("Creating bitmap\n");
   // Define a bitmap for each process
-  unsigned long long *unique_bit_map = (unsigned long long*) malloc(n * sizeof(unsigned long long));
-printf("Clearing bitmap\n");
-  // Clear bitmap
-  for (unsigned long long i = 0LL; i < n; ++i)
-    unique_bit_map[i] = 0LL;
-printf("Filling bitmap\n");
+  unsigned int *unique_bit_map = (unsigned int*) calloc(n, sizeof(unsigned int));
+
+  printf("Filling bitmap\n");
   // Set the bit corrisponding to each product as a unique product
   unsigned long long int product = 0LL; 
   while (my_chunk > 0LL) 
