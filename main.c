@@ -24,7 +24,8 @@ static const int TAG_BIT_MAP = 1;
 // Global Counter
 static unsigned long long counter = 0LL;
 
-int main(int argc, char *argv[]){   
+int main(int argc, char *argv[])
+{   
   int process_rank;
   int num_processors;
 
@@ -34,7 +35,8 @@ int main(int argc, char *argv[]){
   MPI_Comm_size(MPI_COMM_WORLD, &num_processors);
 
   // Check for command line input
-  if (argc < 2){
+  if (argc < 2)
+  {
     if (process_rank == ROOT)
       printf("ERROR: Missing table size. Usage: ./main [table size]\n");
       
@@ -51,7 +53,8 @@ int main(int argc, char *argv[]){
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
   unsigned long long chunk_sizes[num_processors];
-  for (int i = 0; i < num_processors; ++i){
+  for (int i = 0; i < num_processors; ++i)
+  {
       chunk_sizes[i] = floor((float) cells / num_processors);
     
       if (i < cells % num_processors)
@@ -67,14 +70,16 @@ int main(int argc, char *argv[]){
   unsigned long long end = 0LL;
   
   // Determine the ending position for each process
-  for (int i = 0; i < process_rank; ++i){
+  for (int i = 0; i < process_rank; ++i)
+  {
      end += chunk_sizes[i];
   }
   
   // "Fast-forward" each processor to their start location
   unsigned long long i = start;
   unsigned long long j = start;
-  while (end > 0){
+  while (end > 0)
+  {
       --end; --my_chunk; ++i;
       if (i == (table_size + offset)) 
       {
@@ -100,12 +105,14 @@ int main(int argc, char *argv[]){
   printf("Filling bitmap\n");
   // Set the bit corrisponding to each product as a unique product
   unsigned long long int product = 0LL; 
-  while (my_chunk > 0LL){
+  while (my_chunk > 0LL) 
+  {
     product = i * j;
     SETBIT(unique_bit_map, product);
     // printf("set %lli ", product);
     ++i; --my_chunk;
-    if (i == (table_size + offset)) {
+    if (i == (table_size + offset)) 
+    {
       ++j; i = j;
     }
   }
