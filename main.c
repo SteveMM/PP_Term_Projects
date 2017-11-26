@@ -129,9 +129,7 @@ printf("Sending bitmaps\n");
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
 
   if (process_rank == ROOT) { 
-    #pragma omp parallel for num_threads(num_processors - 2) shared(unique_bit_map)
     for (int rank = 1; rank < num_processors; ++rank) {
-        printf("Hi, I'm a thread!");
         // Allocate space for each incoming bitmap
         int *incoming_bit_map = (int*) malloc(n * sizeof(int));
 
