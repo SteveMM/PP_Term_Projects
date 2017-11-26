@@ -129,12 +129,10 @@ printf("Sending bitmaps\n");
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
 
   if (process_rank == ROOT) { 
-
-    // Allocate space for each incoming bitmap
-    int *incoming_bit_map = (int*) malloc(n * sizeof(int));
-
     #pragma omp parallel for num_threads(num_processors) shared(unique_bit_map)
     for (int rank = 1; rank < num_processors; ++rank) {
+        // Allocate space for each incoming bitmap
+        int *incoming_bit_map = (int*) malloc(n * sizeof(int));
 
         // Get each unique bitmap from each process to compare against root bitmap
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
@@ -149,21 +147,24 @@ printf("Sending bitmaps\n");
           }
           // printf("\n");
         }
+        
+        // Free the incoming bitmap space
+        free(incoming_bit_map);
         // printf("\n");
     }
         // printf("\nunique: ");
         // Increment the counter for every bit set in the unique bitmap
+        #pragma omp parallel for
         for (unsigned long long int i = 0LL; i <= num_values; ++i) {
           if (TESTBIT(unique_bit_map, i)) {
             // printf("%lli ", i);
+            #pragma omp critical
             ++counter;
           }
         }
 
       // Print the total count
       printf("counter: %llu\n", counter);
-      // Free the incoming bitmap space
-      free(incoming_bit_map);
   }
 
   // Free the unique bitmap of each process
