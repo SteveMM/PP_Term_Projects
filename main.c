@@ -1,4 +1,5 @@
 #include "mpi.h"
+#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -132,6 +133,7 @@ printf("Sending bitmaps\n");
     // Allocate space for each incoming bitmap
     int *incoming_bit_map = (int*) malloc(n * sizeof(int));
 
+    #pragma omp parallel for num_threads(num_processors) shared(unique_bit_map, n)
     for (int rank = 1; rank < num_processors; ++rank) {
 
         // Get each unique bitmap from each process to compare against root bitmap
@@ -141,6 +143,7 @@ printf("Sending bitmaps\n");
         // the roots unique bitmap, set that bit as unique
         for (unsigned long long int i = 0LL; i <= num_values; ++i) {
           // printf("looking at: %i", i);
+          #pragma omp critical
           if (TESTBIT(incoming_bit_map, i)) {
             // printf("...set.");
             SETBIT(unique_bit_map, i);
