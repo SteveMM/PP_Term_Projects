@@ -125,8 +125,11 @@ int main(int argc, char *argv[])
   MPI_Barrier(MPI_COMM_WORLD);
 printf("Sending bitmaps\n");
   // Each process sends it's unique bitmap to the root process
-  if (process_rank != ROOT)
+  if (process_rank != ROOT) {
     MPI_Send(unique_bit_map, n, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
+    printf("n: %i", n);
+  }
+
 
   if (process_rank == ROOT) { 
     for (int rank = 1; rank < num_processors; ++rank) {
