@@ -100,7 +100,8 @@ int main(int argc, char *argv[])
   // printf("malloc: %llu\n", n * sizeof(int));
   printf("Creating bitmap\n");
   // Define a bitmap for each process
-  unsigned int *unique_bit_map = (unsigned int*) calloc(n, sizeof(unsigned int));
+  int ints_in_bitarray = ceil(n / sizeof(int));
+  unsigned int *unique_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
   if (unique_bit_map == NULL)
       printf("FAILED TO CALLOC BITMAP\n");
 
@@ -119,7 +120,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  int ints_in_bitarray = ceil(n / sizeof(int));
+  
 
   // printf("\n");
 
@@ -135,13 +136,13 @@ printf("Sending bitmaps\n");
     printf("n: %i\n",ints_in_bitarray); 
     for (int rank = 1; rank < num_processors; ++rank) {
         // Allocate space for each incoming bitmap
-        unsigned int *incoming_bit_map = (unsigned int*) calloc(n, sizeof(unsigned int));
+        unsigned int *incoming_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
 
         // Get each unique bitmap from each process to compare against root bitmap
         MPI_Recv(incoming_bit_map, ints_in_bitarray, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
         printf("Incoming bitmap received\n");
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i <= ints_in_bitarray; i++)
           unique_bit_map[i] |= incoming_bit_map[i];
         
         // Free the incoming bitmap space
@@ -159,7 +160,7 @@ printf("Sending bitmaps\n");
         }
 
       // #pragma omp parallel for
-      // for (int i = 0; i < n; i++)
+      // for (int i = 0; i < ints_in_bitarray; i++)
       // {
       //     #pragma omp critical
       //     counter += __builtin_popcount(unique_bit_map[i]);
