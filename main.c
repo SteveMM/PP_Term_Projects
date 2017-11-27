@@ -143,31 +143,26 @@ printf("Sending bitmaps\n");
         for (int i = 0; i < n; i++)
           unique_bit_map[i] |= incoming_bit_map[i];
         
-
-        // If an incoming bitmap contains a unique product that is not yet in
-        // the roots unique bitmap, set that bit as unique
-        // for (unsigned long long int i = 0LL; i <= num_values; ++i) {
-        //   printf("looking at: %llu", i);
-        //   if (TESTBIT(incoming_bit_map, i)) {
-        //     printf("...set.");
-        //     SETBIT(unique_bit_map, i);
-        //   } 
-        // }
-        
         // Free the incoming bitmap space
         free(incoming_bit_map);
-        // printf("\n");
     }
         // printf("\nunique: ");
         // Increment the counter for every bit set in the unique bitmap
         printf("Computing sum\n");
-        #pragma omp parallel for
-        for (unsigned long long int i = 0LL; i <= num_values; ++i) {
-          if (TESTBIT(unique_bit_map, i)) {
-            #pragma omp critical
-            ++counter;
-          }
-        }
+        // #pragma omp parallel for
+        // for (unsigned long long int i = 0LL; i <= num_values; ++i) {
+        //   if (TESTBIT(unique_bit_map, i)) {
+        //     #pragma omp critical
+        //     ++counter;
+        //   }
+        // }
+
+      #pragma omp parallel for
+      for (int i = 0; i < n; i++)
+      {
+          #pragma omp critical
+          count += __builtin_popcount(unique_bit_map[i]);
+      }
 
       // Print the total count
       printf("counter: %llu\n", counter);
