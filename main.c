@@ -157,12 +157,13 @@ printf("Sending bitmaps\n");
         // Increment the counter for every bit set in the unique bitmap
         printf("Computing sum\n");
         #pragma omp parallel for
-        for (unsigned long long int i = 0LL; i <= num_values; ++i) {
-          if (TESTBIT(unique_bit_map, i)) {
-            // printf("%lli ", i);
-            #pragma omp critical
-            ++counter;
-          }
+        for (unsigned long long int i = 0LL; i <= n; ++i) {
+          counter += pop(unique_bit_map[i]);
+          // if (TESTBIT(unique_bit_map, i)) {
+          //   // printf("%lli ", i);
+          //   #pragma omp critical
+          //   ++counter;
+          // }
         }
 
       // Print the total count
@@ -174,4 +175,13 @@ printf("Sending bitmaps\n");
   // Finalize MPI
   MPI_Finalize();
   return 0;
+}
+
+int pop(unsigned x) {
+    x = x - ((x >> 1) & 0x55555555);
+    x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
+    x = (x + (x >> 4)) & 0x0F0F0F0F;
+    x = x + (x >> 8);
+    x = x + (x >> 16);
+    return x & 0x0000003F;
 }
