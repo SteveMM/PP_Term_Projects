@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  int ints_in_bitarray = ciel(n / sizeof(int));
+  int ints_in_bitarray = ceil(n / sizeof(int));
 
   // printf("\n");
 
