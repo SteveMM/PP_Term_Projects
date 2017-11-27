@@ -10,10 +10,6 @@
 #define SETBIT(A,k) ( A[(k/32)] |= (1 << (k%32)) )
 #endif
 
-#ifndef TESTBIT
-#define TESTBIT(A,k) ( A[(k/32)] & (1 << (k%32)) )  
-#endif
-
 // Constants
 static const int ROOT = 0;
 
@@ -23,7 +19,8 @@ static const int TAG_MATRIX_CHUNK_DATA = 1;
 static const int TAG_BIT_MAP = 1;
 
 // Global Counter
-static unsigned long long counter = 0LL;
+// Our algorithm skips counting 1, because it's obvious
+static unsigned long long counter = 1LL;
 
 int main(int argc, char *argv[])
 {   
@@ -158,9 +155,6 @@ printf("Sending bitmaps\n");
           #pragma omp critical
           counter += __builtin_popcount(unique_bit_map[i]);
       }
-
-      if (num_processors > 1)
-          ++counter;
 
       // Print the total count
       printf("counter: %llu\n", counter);
