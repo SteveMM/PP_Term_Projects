@@ -134,14 +134,14 @@ printf("Sending bitmaps\n");
   if (process_rank == ROOT) { 
     for (int rank = 1; rank < num_processors; ++rank) {
         // Allocate space for each incoming bitmap
-        int *incoming_bit_map = (int*) malloc(n * sizeof(int));
+        unsigned int *incoming_bit_map = (unsigned int*) malloc(n * sizeof(unsigned int));
 
         // Get each unique bitmap from each process to compare against root bitmap
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
         printf("Incoming bitmap received\n");
         // If an incoming bitmap contains a unique product that is not yet in
         // the roots unique bitmap, set that bit as unique
-        for (unsigned long long int i = 0LL; i <= num_values; ++i) {
+        for (unsigned int i = 0LL; i <= n; ++i) {
           printf("looking at: %llu", i);
           if (TESTBIT(incoming_bit_map, i)) {
             printf("...set.");
@@ -157,7 +157,7 @@ printf("Sending bitmaps\n");
         // Increment the counter for every bit set in the unique bitmap
         printf("Computing sum\n");
         #pragma omp parallel for
-        for (unsigned long long int i = 0LL; i <= num_values; ++i) {
+        for (unsigned int i = 0LL; i <= n; ++i) {
           if (TESTBIT(unique_bit_map, i)) {
             // printf("%lli ", i);
             #pragma omp critical
