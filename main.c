@@ -161,8 +161,8 @@ printf("Sending bitmaps\n");
         printf("Computing sum\n");
         //#pragma omp parallel for
         for (unsigned long long int i = 0LL; i <= num_values; ++i) {
+          printf("%llu ", i);
           if (TESTBIT(unique_bit_map, i)) {
-            printf("%llu ", i);
             //#pragma omp critical
             ++counter;
           }
