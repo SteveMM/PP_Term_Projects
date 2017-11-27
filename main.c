@@ -151,20 +151,20 @@ printf("Sending bitmaps\n");
         // printf("\nunique: ");
         // Increment the counter for every bit set in the unique bitmap
         printf("Computing sum\n");
-        #pragma omp parallel for
-        for (unsigned long long int i = 0LL; i <= num_values; ++i) {
-          if (TESTBIT(unique_bit_map, i)) {
-            #pragma omp critical
-            ++counter;
-          }
-        }
+        // #pragma omp parallel for
+        // for (unsigned long long int i = 0LL; i <= num_values; ++i) {
+        //   if (TESTBIT(unique_bit_map, i)) {
+        //     #pragma omp critical
+        //     ++counter;
+        //   }
+        // }
 
-      // #pragma omp parallel for
-      // for (int i = 0; i < ints_in_bitarray; i++)
-      // {
-      //     #pragma omp critical
-      //     counter += __builtin_popcount(unique_bit_map[i]);
-      // }
+      #pragma omp parallel for
+      for (int i = 0; i < ints_in_bitarray; i++)
+      {
+          #pragma omp critical
+          counter += __builtin_popcount(unique_bit_map[i]);
+      }
 
       // Print the total count
       printf("counter: %llu\n", counter);
