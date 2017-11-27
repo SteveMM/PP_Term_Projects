@@ -142,7 +142,7 @@ printf("Sending bitmaps\n");
         MPI_Recv(incoming_bit_map, ints_in_bitarray, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
         printf("Incoming bitmap received\n");
 
-        for (int i = 0; i <= ints_in_bitarray; i++)
+        for (int i = 0; i < ints_in_bitarray; i++)
           unique_bit_map[i] |= incoming_bit_map[i];
         
         // Free the incoming bitmap space
