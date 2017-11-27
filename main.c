@@ -160,7 +160,7 @@ printf("Sending bitmaps\n");
       }
 
       if (num_processors > 1)
-          ++counter
+          ++counter;
 
       // Print the total count
       printf("counter: %llu\n", counter);
