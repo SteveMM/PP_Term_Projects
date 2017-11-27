@@ -25,6 +25,15 @@ static const int TAG_BIT_MAP = 1;
 // Global Counter
 static unsigned long long counter = 0LL;
 
+int pop(unsigned x) {
+    x = x - ((x >> 1) & 0x55555555);
+    x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
+    x = (x + (x >> 4)) & 0x0F0F0F0F;
+    x = x + (x >> 8);
+    x = x + (x >> 16);
+    return x & 0x0000003F;
+}
+
 int main(int argc, char *argv[])
 {   
   int process_rank;
@@ -177,11 +186,3 @@ printf("Sending bitmaps\n");
   return 0;
 }
 
-int pop(unsigned x) {
-    x = x - ((x >> 1) & 0x55555555);
-    x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
-    x = (x + (x >> 4)) & 0x0F0F0F0F;
-    x = x + (x >> 8);
-    x = x + (x >> 16);
-    return x & 0x0000003F;
-}
