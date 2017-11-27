@@ -146,8 +146,7 @@ printf("Sending bitmaps\n");
           if (TESTBIT(incoming_bit_map, i)) {
             printf("...set.");
             SETBIT(unique_bit_map, i);
-          }
-git 
+          } 
         }
         
         // Free the incoming bitmap space
