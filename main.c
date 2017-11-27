@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
   // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
   printf("Calculating bitmap size\n");
-  const unsigned int n = ceil(num_values / 8) + 1;
+  const unsigned int n = ceil(num_values / 8);
   printf("Bitmap size: %u\n", n);
 
   // TESTING
@@ -142,12 +142,12 @@ printf("Sending bitmaps\n");
         // If an incoming bitmap contains a unique product that is not yet in
         // the roots unique bitmap, set that bit as unique
         for (unsigned long long int i = 0LL; i <= num_values; ++i) {
-          // printf("looking at: %i", i);
+          printf("looking at: %i", i);
           if (TESTBIT(incoming_bit_map, i)) {
-            // printf("...set.");
+            printf("...set.");
             SETBIT(unique_bit_map, i);
           }
-          // printf("\n");
+          printf("\n");
         }
         
         // Free the incoming bitmap space
