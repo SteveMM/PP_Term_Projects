@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   long table_size = atol(argv[1]);
   const unsigned long long int num_values = table_size * table_size;
   const unsigned long long int cells = ((num_values / 2) + ceil((float) table_size / 2));
-  printf("cells: %i\n", cells);
+  printf("cells: %llu\n", cells);
 
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
