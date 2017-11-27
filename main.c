@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
   // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
   printf("Calculating bitmap size\n");
-  const unsigned int n = ceil(num_values / sizeof(int));
+  const unsigned int n = ceil(num_values / sizeof(char));
   printf("Bitmap size: %u\n", n);
 
   // TESTING
