@@ -119,6 +119,8 @@ int main(int argc, char *argv[])
     }
   }
 
+  int ints_in_bitarray = ciel(n / sizeof(int));
+
   // printf("\n");
 
   // Barrier only for pretty test printing 
@@ -127,16 +129,16 @@ int main(int argc, char *argv[])
 printf("Sending bitmaps\n");
   // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT) 
-    MPI_Send(unique_bit_map, n / sizeof(int), MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
+    MPI_Send(unique_bit_map, ints_in_bitarray, MPI_INT, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
   
   if (process_rank == ROOT) {
-    printf("n: %f\n", n / sizeof(int)); 
+    printf("n: %i\n",ints_in_bitarray); 
     for (int rank = 1; rank < num_processors; ++rank) {
         // Allocate space for each incoming bitmap
         unsigned int *incoming_bit_map = (unsigned int*) calloc(n, sizeof(unsigned int));
 
         // Get each unique bitmap from each process to compare against root bitmap
-        MPI_Recv(incoming_bit_map, n / sizeof(int), MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
+        MPI_Recv(incoming_bit_map, ints_in_bitarray, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
         printf("Incoming bitmap received\n");
 
         for (int i = 0; i < n; i++)
