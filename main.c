@@ -141,7 +141,7 @@ printf("Sending bitmaps\n");
         printf("Incoming bitmap received\n");
         // If an incoming bitmap contains a unique product that is not yet in
         // the roots unique bitmap, set that bit as unique
-        for (unsigned int i = 0LL; i <= n; ++i) {
+        for (unsigned int i = 0; i <= n; ++i) {
           printf("looking at: %u", i);
           if (TESTBIT(incoming_bit_map, i)) {
             printf("...set.");
@@ -157,7 +157,7 @@ printf("Sending bitmaps\n");
         // Increment the counter for every bit set in the unique bitmap
         printf("Computing sum\n");
         #pragma omp parallel for
-        for (unsigned int i = 0LL; i <= n; ++i) {
+        for (unsigned int i = 0; i <= n; ++i) {
           if (TESTBIT(unique_bit_map, i)) {
             // printf("%lli ", i);
             #pragma omp critical
