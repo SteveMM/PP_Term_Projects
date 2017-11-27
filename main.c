@@ -161,7 +161,7 @@ printf("Sending bitmaps\n");
       for (int i = 0; i < n; i++)
       {
           #pragma omp critical
-          count += __builtin_popcount(unique_bit_map[i]);
+          counter += __builtin_popcount(unique_bit_map[i]);
       }
 
       // Print the total count
