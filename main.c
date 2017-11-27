@@ -140,7 +140,7 @@ printf("Sending bitmaps\n");
         MPI_Recv(incoming_bit_map, n, MPI_INT, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
         printf("Incoming bitmap received\n");
 
-        unique_bit_map |= incoming_bit_map;
+        *unique_bit_map |= *incoming_bit_map;
 
         // If an incoming bitmap contains a unique product that is not yet in
         // the roots unique bitmap, set that bit as unique
