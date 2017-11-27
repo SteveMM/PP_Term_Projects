@@ -142,7 +142,7 @@ printf("Sending bitmaps\n");
         // If an incoming bitmap contains a unique product that is not yet in
         // the roots unique bitmap, set that bit as unique
         for (unsigned int i = 0LL; i <= n; ++i) {
-          printf("looking at: %llu", i);
+          printf("looking at: %u", i);
           if (TESTBIT(incoming_bit_map, i)) {
             printf("...set.");
             SETBIT(unique_bit_map, i);
