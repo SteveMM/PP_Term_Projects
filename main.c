@@ -161,7 +161,7 @@ printf("Sending bitmaps\n");
 
       if (num_processors > 1)
           ++counter
-        
+
       // Print the total count
       printf("counter: %llu\n", counter);
   }
@@ -172,5 +172,3 @@ printf("Sending bitmaps\n");
   MPI_Finalize();
   return 0;
 }
-
-push
