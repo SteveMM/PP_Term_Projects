@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
     product = i * j;
     if (product > num_values) {
       printf("Product greater than num values: %llu\n", product);
-      printf("i: %llu; j: ull\n", i, j);
+      printf("i: %llu; j: %llu\n", i, j);
     }
     SETBIT(unique_bit_map, product);
     // printf("set %lli ", product);
