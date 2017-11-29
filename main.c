@@ -108,8 +108,10 @@ int main(int argc, char *argv[])
   while (my_chunk > 0LL) 
   {
     product = i * j;
-    if (product > num_values)
+    if (product > num_values) {
       printf("Product greater than num values: %llu\n", product);
+      printf("i: %llu; j: ull\n", i, j);
+    }
     SETBIT(unique_bit_map, product);
     // printf("set %lli ", product);
     ++i; --my_chunk;
