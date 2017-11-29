@@ -70,10 +70,8 @@ int main(int argc, char *argv[])
   
   // Determine the ending position for each process
   for (int i = 0; i < process_rank; ++i)
-  {
      end += chunk_sizes[i];
-  }
-  
+
   // "Fast-forward" each processor to their start location
   unsigned long long i = start;
   unsigned long long j = start;
@@ -105,7 +103,7 @@ int main(int argc, char *argv[])
   printf("Filling bitmap\n");
   // Set the bit corrisponding to each product as a unique product
   unsigned long long int product = 0LL; 
-  while (my_chunk > 0LL) 
+  while (my_chunk > 1LL) 
   {
     product = i * j;
     if (product > num_values) {
