@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
   // printf("malloc: %llu\n", n * sizeof(int));
   printf("Creating bitmap\n");
   // Define a bitmap for each process
-  int ints_in_bitarray = ceil(n / sizeof(int));
+  unsigned int ints_in_bitarray = ceil(n / sizeof(int));
   unsigned int *unique_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
   if (unique_bit_map == NULL)
       printf("FAILED TO CALLOC BITMAP\n");
