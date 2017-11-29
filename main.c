@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     
     if (product > num_values) {
       product = (i-1) * (j-1);
-      my_chunk = 0LL;
+      my_chunk = 1LL;
       printf("i: %llu; j: %llu; product: %llu Process: %d\n", i-1, j-1, product, process_rank);
     }
     
