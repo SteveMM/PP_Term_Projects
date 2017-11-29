@@ -108,6 +108,8 @@ int main(int argc, char *argv[])
   while (my_chunk > 0LL) 
   {
     product = i * j;
+    if (product < 0)
+      printf("Negative Product: %llu", product);
     SETBIT(unique_bit_map, product);
     // printf("set %lli ", product);
     ++i; --my_chunk;
