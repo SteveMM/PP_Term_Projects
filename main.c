@@ -137,10 +137,10 @@ printf("Sending bitmaps\n");
   if (process_rank == ROOT) {
     printf("n: %i\n",ints_in_bitarray); 
     for (int rank = 1; rank < num_processors; ++rank) {
-        printf("Ints in bitarray: %d\n", ints_in_bitarray);
         // Allocate space for each incoming bitmap
         unsigned int *incoming_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
-      
+        if (incoming_bit_map == NULL)
+          printf("Null pointer!\n");
         // Get each unique bitmap from each process to compare against root bitmap
         MPI_Recv(incoming_bit_map, ints_in_bitarray, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
         printf("Incoming bitmap received\n");
