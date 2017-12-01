@@ -2,7 +2,6 @@
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <math.h>
 
 // Macro definition(s)
@@ -18,15 +17,14 @@ static const int TAG_CHUNK_SIZE = 0;
 static const int TAG_MATRIX_CHUNK_DATA = 1;
 static const int TAG_BIT_MAP = 1;
 
-// Global Counter
-// Our algorithm skips counting 1, because it's obvious
-static unsigned long long counter = 1LL;
-
 int main(int argc, char *argv[])
 {   
   int process_rank;
   int num_processors;
 
+  double start_time = 0.0;
+  double end_time = 0.0;
+  
   // Initialize MPI
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &process_rank);
@@ -42,6 +40,8 @@ int main(int argc, char *argv[])
       MPI_Finalize();
       return 0;
   }
+  
+  start_time = MPI_Wtime();
   
   // Define problem paramaters
   long table_size = atol(argv[1]);
@@ -140,6 +140,9 @@ int main(int argc, char *argv[])
         // Free the incoming bitmap space
         free(incoming_bit_map);
     }
+      
+      // Our algorithm skips counting 1, because it's obvious
+      static unsigned long long counter = 1LL;
     
       #pragma omp parallel for
       for (int i = 0; i < ints_in_bitarray; i++)
@@ -150,6 +153,10 @@ int main(int argc, char *argv[])
 
       // Print the total count
       printf("counter: %llu\n", counter);
+      
+      end_time = MPI_Wtime();
+      printf("Wallclock time elapsed: %.2lf seconds\n", end_time - start_time);
+    
       free(unique_bit_map);
   }
   
