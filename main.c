@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
         // Free the incoming bitmap space
         free(incoming_bit_map);
       
-      incoming_bit_map = = (unsigned int*) calloc(half_size, sizeof(unsigned int));
+      incoming_bit_map = (unsigned int*) calloc(half_size, sizeof(unsigned int));
       MPI_Recv(incoming_bit_map, half_size, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
       
       for (int i = 0; i < half_size; i++)
