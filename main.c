@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
   // Define problem paramaters
   long table_size = atol(argv[1]);
   const unsigned long long int num_values = table_size * table_size;
-  const unsigned long long int cells = ((num_values / 2) + ceil((float) table_size / 2));
+  const unsigned long long int cells = ((num_values - table_size) / 2) + table_size;
 
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
