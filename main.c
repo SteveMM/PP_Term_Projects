@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
     }
   }
   
-  const unsigned int half_size = ceil((float)ints_in_bitarray / 2.0f);
+  const unsigned int half_size = (int) ceil((float)ints_in_bitarray / 2.0f);
   
   // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT) 
