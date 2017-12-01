@@ -86,7 +86,6 @@ int main(int argc, char *argv[])
   // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
   const unsigned int ints_in_bitarray = ceil(ceil(num_values / 8) / sizeof(unsigned int));
-  printf("ints_in_bitarray: %i\n", ints_in_bitarray);
 
   // Define a bitmap for each process
   unsigned int *unique_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
