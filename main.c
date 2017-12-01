@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
   long table_size = atol(argv[1]);
   const unsigned long long int num_values = table_size * table_size;
   const unsigned long long int cells = ((num_values / 2) + ceil((float) table_size / 2));
-  printf("cells: %llu\n", cells);
 
   // Calculate each processors chunk, the 
   // number of cells this processor will calculate
@@ -86,21 +85,13 @@ int main(int argc, char *argv[])
 
   // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
-  printf("Calculating bitmap size\n");
   const unsigned int ints_in_bitarray = ceil((num_values / 8) / sizeof(unsigned int));
-  printf("Bitmap size: %u\n", ints_in_bitarray);
 
-  // TESTING
-  // printf("n: %llu\n", n);
-  // printf("malloc: %llu\n", n * sizeof(int));
-  printf("Creating bitmap\n");
   // Define a bitmap for each process
-  //unsigned int ints_in_bitarray = ceil(n / sizeof(unsigned int));
   unsigned int *unique_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
   if (unique_bit_map == NULL)
       printf("FAILED TO CALLOC BITMAP\n");
 
-  printf("Filling bitmap\n");
   // Set the bit corrisponding to each product as a unique product
   unsigned long long int product = 0LL; 
   while (my_chunk > 0LL) 
@@ -110,28 +101,18 @@ int main(int argc, char *argv[])
     if (product > num_values) {
       product = (i-1) * (j-1);
       my_chunk = 1LL;
-      printf("i: %llu; j: %llu; product: %llu Process: %d\n", i-1, j-1, product, process_rank);
     }
     
     SETBIT(unique_bit_map, product);
-    // printf("set %lli ", product);
     ++i; --my_chunk;
     if (i == (table_size + offset)) 
     {
       ++j; i = j;
     }
   }
-
-  
-
-  // printf("\n");
-
-  // Barrier only for pretty test printing 
-  // TODO: Remove barrier
-  MPI_Barrier(MPI_COMM_WORLD);
-  printf("Sending bitmaps\n");
   
   const unsigned int half_size = ceil((float)ints_in_bitarray / 2.0f);
+  
   // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT) 
   { 
@@ -141,17 +122,12 @@ int main(int argc, char *argv[])
   }
   
   if (process_rank == ROOT) {
-    printf("n: %i\n",ints_in_bitarray); 
     for (int rank = 1; rank < num_processors; ++rank) {
         // Allocate space for each incoming bitmap
         unsigned int *incoming_bit_map = (unsigned int*) calloc(half_size, sizeof(unsigned int));
-        if (incoming_bit_map == NULL)
-          printf("Null pointer!\n");
-        else
-          printf("Allocated incoming_bit_map for process: %d\n", rank);
+    
         // Get each unique bitmap from each process to compare against root bitmap
         MPI_Recv(incoming_bit_map, half_size, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
-        printf("Incoming bitmap received\n");
 
         for (int i = 0; i < half_size; i++)
           unique_bit_map[i] |= incoming_bit_map[i];
@@ -164,10 +140,7 @@ int main(int argc, char *argv[])
         // Free the incoming bitmap space
         free(incoming_bit_map);
     }
-        // printf("\nunique: ");
-        // Increment the counter for every bit set in the unique bitmap
-        printf("Computing sum\n");
-
+    
       #pragma omp parallel for
       for (int i = 0; i < ints_in_bitarray; i++)
       {
