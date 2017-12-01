@@ -117,7 +117,10 @@ int main(int argc, char *argv[])
   if (process_rank != ROOT) 
   { 
     MPI_Send(unique_bit_map, half_size, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
-    MPI_Send(unique_bit_map + half_size, half_size, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
+    
+    if (half_size > 1)
+      MPI_Send(unique_bit_map + half_size, half_size, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
+    
     free(unique_bit_map);
   }
   
@@ -132,10 +135,13 @@ int main(int argc, char *argv[])
         for (int i = 0; i < half_size; i++)
           unique_bit_map[i] |= incoming_bit_map[i];
       
-        MPI_Recv(incoming_bit_map, half_size, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
-      
-        for (int i = 0; i < half_size; i++)
-            (unique_bit_map + half_size)[i] |= incoming_bit_map[i];
+        if (half_size > 1)
+        {
+          MPI_Recv(incoming_bit_map, half_size, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
+
+          for (int i = 0; i < half_size; i++)
+              (unique_bit_map + half_size)[i] |= incoming_bit_map[i];
+        }
       
         // Free the incoming bitmap space
         free(incoming_bit_map);
