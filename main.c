@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
   MPI_Barrier(MPI_COMM_WORLD);
   printf("Sending bitmaps\n");
   
-  const unsigned int half_size = ints_in_bitarray / 2;
+  const unsigned int half_size = ceil(ints_in_bitarray / 2);
   // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT) 
   { 
