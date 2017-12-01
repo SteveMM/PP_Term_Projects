@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
   // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
   printf("Calculating bitmap size\n");
-  const unsigned int ints_in_bitarray = ceil((num_values / sizeof(unsigned char)) / sizeof(unsigned int));
+  const unsigned int ints_in_bitarray = ceil((num_values / 8) / sizeof(unsigned int));
   printf("Bitmap size: %u\n", ints_in_bitarray);
 
   // TESTING
