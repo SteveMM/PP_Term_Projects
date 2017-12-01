@@ -124,33 +124,35 @@ int main(int argc, char *argv[])
     free(unique_bit_map);
   }
   
-  if (process_rank == ROOT) {
-    for (int rank = 1; rank < num_processors; ++rank) {
-        // Allocate space for each incoming bitmap
-        unsigned int *incoming_bit_map = (unsigned int*) calloc(half_size, sizeof(unsigned int));
+  if (process_rank == ROOT) 
+  {
+    // Allocate buffer space for each incoming bitmap
+    unsigned int *incoming_bit_map = (unsigned int*) calloc(half_size, sizeof(unsigned int));
     
+    for (int rank = 1; rank < num_processors; ++rank) 
+    {
         // Get each unique bitmap from each process to compare against root bitmap
         MPI_Recv(incoming_bit_map, half_size, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
-        for (int i = 0; i < half_size; i++)
+        for (int i = 0; i < half_size; ++i)
           unique_bit_map[i] |= incoming_bit_map[i];
       
         if (half_size > 1)
         {
           MPI_Recv(incoming_bit_map, half_size, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
-          for (int i = 0; i < half_size; i++)
+          for (int i = 0; i < half_size; ++i)
               (unique_bit_map + half_size)[i] |= incoming_bit_map[i];
         }
-      
-        // Free the incoming bitmap space
-        free(incoming_bit_map);
     }
-      
+    
+      // Free the incoming bitmap space
+      free(incoming_bit_map);  
+    
       static unsigned long long counter = 0LL;
     
       #pragma omp parallel for
-      for (int i = 0; i < ints_in_bitarray; i++)
+      for (int i = 0; i < ints_in_bitarray; ++i)
       {
           #pragma omp critical
           counter += __builtin_popcount(unique_bit_map[i]);
