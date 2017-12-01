@@ -142,7 +142,7 @@ printf("Sending bitmaps\n");
   
   if (process_rank == ROOT) {
     printf("n: %i\n",ints_in_bitarray); 
-    for (int rank = 1; rank < num_processors * 2; ++rank) {
+    for (int rank = 1; rank < (num_processors * 2) - 1; ++rank) {
         // Allocate space for each incoming bitmap
         unsigned int *incoming_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
         if (incoming_bit_map == NULL)
