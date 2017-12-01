@@ -129,12 +129,12 @@ int main(int argc, char *argv[])
   // Barrier only for pretty test printing 
   // TODO: Remove barrier
   MPI_Barrier(MPI_COMM_WORLD);
-printf("Sending bitmaps\n");
+  printf("Sending bitmaps\n");
+  
+  const unsigned int half_size = ints_in_bitarray / 2;
   // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT) 
-  {
-    const unsigned int half_size = ints_in_bitarray / 2;
-    
+  { 
     MPI_Send(unique_bit_map, half_size, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
     MPI_Send(unique_bit_map + half_size, half_size, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
     free(unique_bit_map);
@@ -142,22 +142,28 @@ printf("Sending bitmaps\n");
   
   if (process_rank == ROOT) {
     printf("n: %i\n",ints_in_bitarray); 
-    for (int rank = 1; rank < (num_processors * 2) - 1; ++rank) {
+    for (int rank = 1; rank < num_processors; ++rank) {
         // Allocate space for each incoming bitmap
-        unsigned int *incoming_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
+        unsigned int *incoming_bit_map = (unsigned int*) calloc(half_size, sizeof(unsigned int));
         if (incoming_bit_map == NULL)
           printf("Null pointer!\n");
         else
           printf("Allocated incoming_bit_map for process: %d\n", rank);
         // Get each unique bitmap from each process to compare against root bitmap
-        MPI_Recv(incoming_bit_map, ints_in_bitarray, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
+        MPI_Recv(incoming_bit_map, half_size, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
         printf("Incoming bitmap received\n");
 
-        for (int i = 0; i < ints_in_bitarray; i++)
+        for (int i = 0; i < half_size; i++)
           unique_bit_map[i] |= incoming_bit_map[i];
         
         // Free the incoming bitmap space
         free(incoming_bit_map);
+      
+      incoming_bit_map = = (unsigned int*) calloc(half_size, sizeof(unsigned int));
+      MPI_Recv(incoming_bit_map, half_size, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
+      
+      for (int i = 0; i < half_size; i++)
+          (unique_bit_map + half_size)[i] |= incoming_bit_map[i];
     }
         // printf("\nunique: ");
         // Increment the counter for every bit set in the unique bitmap
