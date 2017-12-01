@@ -148,8 +148,7 @@ int main(int argc, char *argv[])
         free(incoming_bit_map);
     }
       
-      // Our algorithm skips counting 1, because it's obvious
-      static unsigned long long counter = 1LL;
+      static unsigned long long counter = 0LL;
     
       #pragma omp parallel for
       for (int i = 0; i < ints_in_bitarray; i++)
