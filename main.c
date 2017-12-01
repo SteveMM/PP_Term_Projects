@@ -133,13 +133,16 @@ printf("Sending bitmaps\n");
   // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT) 
   {
-    MPI_Send(unique_bit_map, ints_in_bitarray, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
+    const unsigned int half_size = ints_in_bitarray / 2;
+    
+    MPI_Send(unique_bit_map, half_size, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
+    MPI_Send(unique_bit_map + half_size, half_size, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
     free(unique_bit_map);
   }
   
   if (process_rank == ROOT) {
     printf("n: %i\n",ints_in_bitarray); 
-    for (int rank = 1; rank < num_processors; ++rank) {
+    for (int rank = 1; rank < num_processors * 2; ++rank) {
         // Allocate space for each incoming bitmap
         unsigned int *incoming_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
         if (incoming_bit_map == NULL)
