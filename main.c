@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
   // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
   printf("Calculating bitmap size\n");
-  const unsigned int n = ceil(num_values / 8);
+  const unsigned int n = ceil(num_values / sizeof(unsigned int));
   printf("Bitmap size: %u\n", n);
 
   // TESTING
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
   // printf("malloc: %llu\n", n * sizeof(int));
   printf("Creating bitmap\n");
   // Define a bitmap for each process
-  unsigned int ints_in_bitarray = ceil(n / sizeof(int));
+  unsigned int ints_in_bitarray = ceil(n / sizeof(unsigned int));
   unsigned int *unique_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
   if (unique_bit_map == NULL)
       printf("FAILED TO CALLOC BITMAP\n");
