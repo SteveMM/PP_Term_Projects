@@ -132,7 +132,10 @@ int main(int argc, char *argv[])
 printf("Sending bitmaps\n");
   // Each process sends it's unique bitmap to the root process
   if (process_rank != ROOT) 
+  {
     MPI_Send(unique_bit_map, ints_in_bitarray, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
+    free(unique_bit_map);
+  }
   
   if (process_rank == ROOT) {
     printf("n: %i\n",ints_in_bitarray); 
