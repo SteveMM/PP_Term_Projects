@@ -167,10 +167,9 @@ printf("Sending bitmaps\n");
 
       // Print the total count
       printf("counter: %llu\n", counter);
+      free(unique_bit_map);
   }
-
-  // Free the unique bitmap of each process
-  free(unique_bit_map);
+  
   // Finalize MPI
   MPI_Finalize();
   return 0;
