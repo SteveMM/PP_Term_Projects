@@ -97,7 +97,6 @@ int main(int argc, char *argv[])
   while (my_chunk > 0LL) 
   {
     product = i * j;
-    printf("product: %llu\n", product);
     
     if (product > num_values) {
       product = (i-1) * (j-1);
@@ -153,7 +152,7 @@ int main(int argc, char *argv[])
       static unsigned long long counter = 0LL;
     
       #pragma omp parallel for
-      for (int i = 0; i < ints_in_bitarray; ++i)
+      for (int i = 0; i < ints_in_bitarray + 1; ++i)
       {
           #pragma omp critical
           counter += __builtin_popcount(unique_bit_map[i]);
