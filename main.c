@@ -97,11 +97,12 @@ int main(int argc, char *argv[])
   while (my_chunk > 0LL) 
   {
     product = i * j;
+    printf("product: %llu\n", product);
     
-    // if (product > num_values) {
-    //   product = (i-1) * (j-1);
-    //   my_chunk = 0LL;
-    // }
+    if (product > num_values) {
+      product = (i-1) * (j-1);
+      my_chunk = 1LL;
+    }
     
     SETBIT(unique_bit_map, product);
     ++i; --my_chunk;
@@ -117,7 +118,9 @@ int main(int argc, char *argv[])
   if (process_rank != ROOT) 
   { 
     MPI_Send(unique_bit_map, half_size, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
-    MPI_Send(unique_bit_map + half_size, half_size, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
+    
+    if (half_size > 1)
+      MPI_Send(unique_bit_map + half_size, half_size, MPI_UNSIGNED, ROOT, TAG_BIT_MAP, MPI_COMM_WORLD);
     
     free(unique_bit_map);
   }
@@ -135,11 +138,13 @@ int main(int argc, char *argv[])
         for (int i = 0; i < half_size; ++i)
           unique_bit_map[i] |= incoming_bit_map[i];
       
-        MPI_Recv(incoming_bit_map, half_size, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
+        if (half_size > 1)
+        {
+          MPI_Recv(incoming_bit_map, half_size, MPI_UNSIGNED, rank, TAG_BIT_MAP, MPI_COMM_WORLD, NULL);
 
-        for (int i = 0; i < half_size; ++i)
-            (unique_bit_map + half_size)[i] |= incoming_bit_map[i];
-
+          for (int i = 0; i < half_size; ++i)
+              (unique_bit_map + half_size)[i] |= incoming_bit_map[i];
+        }
     }
     
       // Free the incoming bitmap space
