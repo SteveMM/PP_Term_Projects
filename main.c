@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
       static unsigned long long counter = 0LL;
     
       #pragma omp parallel for
-      for (int i = 0; i < ints_in_bitarray + 1; ++i)
+      for (int i = 0; i < ints_in_bitarray; i++)
       {
           #pragma omp critical
           counter += __builtin_popcount(unique_bit_map[i]);
