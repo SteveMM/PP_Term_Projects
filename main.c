@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     
     if (product > num_values) {
       product = (i-1) * (j-1);
-      my_chunk = 1LL;
+      my_chunk = 0LL;
     }
     
     SETBIT(unique_bit_map, product);
