@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 
   // Reinitialize my_chunk after decrement
   my_chunk = chunk_sizes[process_rank];
-  const unsigned int ints_in_bitarray = ceil(ceil(num_values / 8) / sizeof(unsigned int));
+  const unsigned int ints_in_bitarray = ceil(ceil(num_values / 8) / sizeof(unsigned int)) + 1;
 
   // Define a bitmap for each process
   unsigned int *unique_bit_map = (unsigned int*) calloc(ints_in_bitarray, sizeof(unsigned int));
@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
       static unsigned long long counter = 0LL;
     
       #pragma omp parallel for
-      for (int i = 0; i < ints_in_bitarray + 1; ++i)
+      for (int i = 0; i < ints_in_bitarray; ++i)
       {
           #pragma omp critical
           counter += __builtin_popcount(unique_bit_map[i]);
